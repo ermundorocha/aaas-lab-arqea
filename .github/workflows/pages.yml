@@ -24,6 +24,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Prepare site content
+        run: |
+          cp README.md public/README.md
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 

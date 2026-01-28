@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AaaS Lab — Arquitetura</title>
+  <link rel="stylesheet" href="./style.css" />
+  <meta name="color-scheme" content="light dark">
+  <style>
+    /* pequenas melhorias para leitura longa */
+    .doc { line-height: 1.55; font-size: 14px; }
+    .doc h1,.doc h2,.doc h3 { margin-top: 18px; }
+    .doc pre { overflow:auto; padding:12px; border-radius:12px; border:1px solid var(--line); }
+    .doc code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+    .doc table { width:100%; border-collapse: collapse; }
+    .doc th, .doc td { border:1px solid var(--line); padding:8px; vertical-align: top; }
+    .doc blockquote { margin: 10px 0; padding: 10px 12px; border-left: 4px solid var(--accent2); background: color-mix(in srgb, var(--bg) 88%, var(--card) 12%); border-radius: 10px; }
+    .topnav { display:flex; gap:10px; align-items:center; }
+  </style>
+
+  <!-- Markdown renderer -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <!-- Mermaid renderer -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">AaaS</div>
+      <div class="titles">
+        <h1>Arquitetura da Solução</h1>
+        <p class="sub">Documento executivo • padrões • desenho • guia operacional</p>
+      </div>
+    </div>
+
+    <div class="actions topnav">
+      <a class="btn" href="./index.html">Voltar</a>
+      <button id="btnTheme" class="btn" title="Alternar tema">🌗</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>Documento (README.md)</h2>
+      <div id="status" class="status">Carregando…</div>
+      <div id="doc" class="doc"></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>ARQEA AaaS Lab • Arquitetura</span>
+  </footer>
+
+  <script>
+    // tema (reaproveita a mesma lógica do seu script.js)
+    function loadTheme() {
+      const t = localStorage.getItem("aaas_theme") || "light";
+      document.documentElement.classList.toggle("dark", t === "dark");
+    }
+    function toggleTheme() {
+      const isDark = document.documentElement.classList.toggle("dark");
+      localStorage.setItem("aaas_theme", isDark ? "dark" : "light");
+    }
+    document.getElementById("btnTheme").addEventListener("click", toggleTheme);
+    loadTheme();
+
+    mermaid.initialize({ startOnLoad: false });
+
+    async function loadReadme() {
+      const status = document.getElementById("status");
+      const doc = document.getElementById("doc");
+
+      try {
+        const r = await fetch("./README.md", { cache: "no-store" });
+        if (!r.ok) throw new Error("README.md não encontrado no site publicado.");
+        const md = await r.text();
+
+        // render Markdown
+        doc.innerHTML = marked.parse(md);
+
+        // render Mermaid: transforma blocos ```mermaid em <pre class="mermaid">
+        const mermaids = Array.from(doc.querySelectorAll("code.language-mermaid"));
+        mermaids.forEach((codeEl, idx) => {
+          const pre = codeEl.closest("pre");
+          const div = document.createElement("div");
+          div.className = "mermaid";
+          div.textContent = codeEl.textContent;
+          pre.replaceWith(div);
+        });
+
+        await mermaid.run({ querySelector: ".mermaid" });
+
+        status.textContent = "Carregado.";
+      } catch (e) {
+        status.textContent = "Falha ao carregar: " + e.message;
+        status.style.color = "crimson";
+      }
+    }
+
+    loadReadme();
+  </script>
+</body>
+</html>
