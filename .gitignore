@@ -1,0 +1,12 @@
+# Node
+**/node_modules/
+**/.env
+**/.env.*
+
+# Logs
+**/*.log
+
+# OS/Editor
+.DS_Store
+Thumbs.db
+.vscode/

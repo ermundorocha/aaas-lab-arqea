@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AaaS Lab — Workspaces</title>
+  <link rel="stylesheet" href="/frontend/style.css" />
+  <meta name="color-scheme" content="light dark">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">AaaS</div>
+      <div class="titles">
+        <h1>Architecture as a Service</h1>
+        <p class="sub">Workspaces • Catálogo via Backend • GitOps ready</p>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button id="btnTheme" class="btn" title="Alternar tema">🌗</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>Conexão</h2>
+
+      <div class="grid">
+        <label class="field">
+          <span>Backend URL</span>
+          <input id="apiBase" type="text" value="http://localhost:8080" />
+        </label>
+
+        <label class="field">
+          <span>Workspace</span>
+          <input id="workspace" type="text" value="default" placeholder="ex.: arqea" />
+        </label>
+
+        <label class="field">
+          <span>Token (x-aaas-token)</span>
+          <input id="token" type="password" placeholder="cole o token do workspace" />
+        </label>
+
+        <div class="field">
+          <span>&nbsp;</span>
+          <button id="btnLoad" class="btn primary">Carregar catálogo</button>
+        </div>
+      </div>
+
+      <div class="hint">
+        Dica: use <code>x-aaas-workspace</code> + <code>x-aaas-token</code>. Ex.: workspace <b>arqea</b>, token <b>arqea-456</b>.
+      </div>
+
+      <div id="status" class="status"></div>
+    </section>
+
+    <section class="card">
+      <div class="cardhead">
+        <h2>Artefatos do Workspace</h2>
+        <div class="meta">
+          <span id="count">0</span> itens
+        </div>
+      </div>
+
+      <div id="list" class="list"></div>
+    </section>
+
+    <section class="card">
+      <h2>Gerar (assíncrono)</h2>
+      <div class="grid">
+        <label class="field span2">
+          <span>Prompt</span>
+          <textarea id="prompt" rows="4" placeholder="Descreva o que você quer gerar..."></textarea>
+        </label>
+
+        <label class="field">
+          <span>Kind</span>
+          <select id="kind">
+            <option value="blueprint">blueprint</option>
+            <option value="adr">adr</option>
+            <option value="doc">doc</option>
+          </select>
+        </label>
+
+        <div class="field">
+          <span>&nbsp;</span>
+          <button id="btnGenerate" class="btn primary">Gerar (Job)</button>
+        </div>
+      </div>
+
+      <div class="jobline">
+        <div><b>Job:</b> <span id="jobId">—</span></div>
+        <div><b>Status:</b> <span id="jobStatus">—</span></div>
+        <div><button id="btnPoll" class="btn">Acompanhar</button></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>ARQEA AaaS Lab • OnePage</span>
+  </footer>
+
+  <script src="/frontend/script.js"></script>
+</body>
+</html>

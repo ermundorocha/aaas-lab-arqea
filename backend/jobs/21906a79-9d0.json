@@ -1,0 +1,145 @@
+{
+  "id": "21906a79-9d0",
+  "kind": "blueprint",
+  "prompt": "Job com drawio desativado para testar RESUME autom�tico.",
+  "status": "DONE",
+  "createdAt": "2026-01-27T18:11:27.768Z",
+  "updatedAt": "2026-01-27T18:11:27.872Z",
+  "steps": [
+    {
+      "ts": "2026-01-27T18:11:27.772Z",
+      "level": "info",
+      "event": "ENQUEUED",
+      "msg": "job queued"
+    },
+    {
+      "ts": "2026-01-27T18:11:27.777Z",
+      "level": "info",
+      "event": "JOB_START",
+      "msg": "event received"
+    },
+    {
+      "ts": "2026-01-27T18:11:27.782Z",
+      "level": "info",
+      "event": "JOB_START",
+      "msg": "job running"
+    },
+    {
+      "ts": "2026-01-27T18:11:27.784Z",
+      "level": "info",
+      "event": "STEP_PREVIEW",
+      "msg": "event received"
+    },
+    {
+      "ts": "2026-01-27T18:11:27.786Z",
+      "level": "info",
+      "event": "STEP_PREVIEW",
+      "msg": "generating preview"
+    },
+    {
+      "ts": "2026-01-27T18:11:27.791Z",
+      "level": "info",
+      "event": "STEP_BUILD_ARTIFACTS",
+      "msg": "event received"
+    },
+    {
+      "ts": "2026-01-27T18:11:27.794Z",
+      "level": "info",
+      "event": "STEP_BUILD_ARTIFACTS",
+      "msg": "building artifacts"
+    },
+    {
+      "ts": "2026-01-27T18:11:27.802Z",
+      "level": "info",
+      "event": "STEP_DRAWIO",
+      "msg": "event received"
+    },
+    {
+      "ts": "2026-01-27T18:11:27.810Z",
+      "level": "info",
+      "event": "STEP_DRAWIO",
+      "msg": "building drawio xml"
+    },
+    {
+      "ts": "2026-01-27T18:11:27.819Z",
+      "level": "info",
+      "event": "STEP_WRITE_FILES",
+      "msg": "event received"
+    },
+    {
+      "ts": "2026-01-27T18:11:27.823Z",
+      "level": "info",
+      "event": "STEP_WRITE_FILES",
+      "msg": "writing docs files + catalog"
+    },
+    {
+      "ts": "2026-01-27T18:11:27.865Z",
+      "level": "info",
+      "event": "STEP_GITOPS",
+      "msg": "event received"
+    },
+    {
+      "ts": "2026-01-27T18:11:27.871Z",
+      "level": "info",
+      "event": "DONE",
+      "msg": "job completed"
+    }
+  ],
+  "result": {
+    "meta": {
+      "id": "b4e57712",
+      "date": "2026-01-27",
+      "kind": "blueprint",
+      "slug": "blueprint-2026-01-27-b4e57712",
+      "title": "BLUEPRINT 2026-01-27 - b4e57712",
+      "diagramPath": "diagrams/blueprint-2026-01-27-b4e57712.drawio"
+    },
+    "written": [
+      "blueprints/blueprint-2026-01-27-b4e57712.md",
+      "decisions/ADR-2026-01-27-b4e57712.md",
+      "diagrams/blueprint-2026-01-27-b4e57712.drawio"
+    ],
+    "gitops": {
+      "enabled": false
+    }
+  },
+  "error": null,
+  "ctx": {
+    "preview": "# Preview de Arquitetura (Mock)\n\n            ## Objetivo\n            Validar o fluxo de Arquitetura como Serviço (AaaS) sem dependência externa.\n\n            ## Escopo\n            - Frontend estático\n            - Backend seguro\n            - Geração de artefatos arquiteturais\n\n            ## Arquitetura (alto nível)\n            Front → Backend → Artefatos → GitOps → Publicação\n\n            ## NFRs\n            - Segurança\n            - Rastreabilidade\n            - Recuperabilidade\n            - Evolução incremental\n\n            ## Próximos Passos\n            - Persistir artefatos\n            - Versionar em Git\n            - Automatizar diagramas\n            ",
+    "artifacts": {
+      "meta": {
+        "id": "b4e57712",
+        "date": "2026-01-27",
+        "kind": "blueprint",
+        "slug": "blueprint-2026-01-27-b4e57712",
+        "title": "BLUEPRINT 2026-01-27 - b4e57712",
+        "diagramPath": "diagrams/blueprint-2026-01-27-b4e57712.drawio"
+      },
+      "nodes": [
+        {
+          "label": "Frontend (OnePage)"
+        },
+        {
+          "label": "Backend IA Seguro (API)"
+        },
+        {
+          "label": "Artefatos (docs/) + GitOps"
+        }
+      ],
+      "files": [
+        {
+          "path": "blueprints/blueprint-2026-01-27-b4e57712.md",
+          "content": "# BLUEPRINT 2026-01-27 - b4e57712\n\n## Contexto do Pedido\nJob com drawio desativado para testar RESUME autom�tico.\n\n## Preview Gerado\n# Preview de Arquitetura (Mock)\n\n            ## Objetivo\n            Validar o fluxo de Arquitetura como Serviço (AaaS) sem dependência externa.\n\n            ## Escopo\n            - Frontend estático\n            - Backend seguro\n            - Geração de artefatos arquiteturais\n\n            ## Arquitetura (alto nível)\n            Front → Backend → Artefatos → GitOps → Publicação\n\n            ## NFRs\n            - Segurança\n            - Rastreabilidade\n            - Recuperabilidade\n            - Evolução incremental\n\n            ## Próximos Passos\n            - Persistir artefatos\n            - Versionar em Git\n            - Automatizar diagramas\n            \n"
+        },
+        {
+          "path": "decisions/ADR-2026-01-27-b4e57712.md",
+          "content": "# ADR 2026-01-27-b4e57712: blueprint\n\n## Contexto\nJob com drawio desativado para testar RESUME autom�tico.\n\n## Decisão\nAdotar uma abordagem incremental orientada a eventos, com artefatos versionados.\n\n## Consequências\n- Padronização e rastreabilidade dos artefatos\n- Facilidade de rollback (quando GitOps entrar)\n- Evolução por módulos independentes\n"
+        },
+        {
+          "path": "diagrams/blueprint-2026-01-27-b4e57712.drawio",
+          "content": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<mxfile host=\"app.diagrams.net\">\n  <diagram name=\"BLUEPRINT 2026-01-27 - b4e57712\">\n    <mxGraphModel dx=\"1200\" dy=\"800\" grid=\"1\" gridSize=\"10\">\n      <root>\n        <mxCell id=\"0\"/><mxCell id=\"1\" parent=\"0\"/>\n\n        <mxCell id=\"2\" value=\"Frontend (OnePage)\" style=\"rounded=1;whiteSpace=wrap;html=1;\" vertex=\"1\" parent=\"1\">\n          <mxGeometry x=\"60\" y=\"140\" width=\"240\" height=\"90\" as=\"geometry\"/>\n        </mxCell>\n\n        <mxCell id=\"3\" value=\"Backend IA Seguro (API)\" style=\"rounded=1;whiteSpace=wrap;html=1;\" vertex=\"1\" parent=\"1\">\n          <mxGeometry x=\"360\" y=\"140\" width=\"280\" height=\"90\" as=\"geometry\"/>\n        </mxCell>\n\n        <mxCell id=\"4\" value=\"Artefatos (docs/) + GitOps\" style=\"rounded=1;whiteSpace=wrap;html=1;\" vertex=\"1\" parent=\"1\">\n          <mxGeometry x=\"720\" y=\"140\" width=\"280\" height=\"90\" as=\"geometry\"/>\n        </mxCell>\n\n        <mxCell id=\"5\" style=\"endArrow=block;html=1;\" edge=\"1\" parent=\"1\" source=\"2\" target=\"3\">\n          <mxGeometry relative=\"1\" as=\"geometry\"/>\n        </mxCell>\n\n        <mxCell id=\"6\" style=\"endArrow=block;html=1;\" edge=\"1\" parent=\"1\" source=\"3\" target=\"4\">\n          <mxGeometry relative=\"1\" as=\"geometry\"/>\n        </mxCell>\n\n      </root>\n    </mxGraphModel>\n  </diagram>\n</mxfile>"
+        }
+      ]
+    }
+  }
+}

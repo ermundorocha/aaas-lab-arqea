@@ -1,0 +1,101 @@
+{
+  "id": "66428a58-9a8",
+  "kind": "blueprint",
+  "prompt": "Teste pipeline ass�ncrono: gerar artefatos + drawio + gitops.",
+  "status": "DONE",
+  "createdAt": "2026-01-27T13:57:55.421Z",
+  "updatedAt": "2026-01-27T13:57:55.562Z",
+  "steps": [
+    {
+      "ts": "2026-01-27T13:57:55.424Z",
+      "level": "info",
+      "event": "ENQUEUED",
+      "msg": "job queued"
+    },
+    {
+      "ts": "2026-01-27T13:57:55.428Z",
+      "level": "info",
+      "event": "JOB_START",
+      "msg": "event received"
+    },
+    {
+      "ts": "2026-01-27T13:57:55.432Z",
+      "level": "info",
+      "event": "JOB_START",
+      "msg": "job running"
+    },
+    {
+      "ts": "2026-01-27T13:57:55.451Z",
+      "level": "info",
+      "event": "STEP_PREVIEW",
+      "msg": "event received"
+    },
+    {
+      "ts": "2026-01-27T13:57:55.457Z",
+      "level": "info",
+      "event": "STEP_PREVIEW",
+      "msg": "generating preview"
+    },
+    {
+      "ts": "2026-01-27T13:57:55.462Z",
+      "level": "info",
+      "event": "STEP_BUILD_ARTIFACTS",
+      "msg": "event received"
+    },
+    {
+      "ts": "2026-01-27T13:57:55.474Z",
+      "level": "info",
+      "event": "STEP_BUILD_ARTIFACTS",
+      "msg": "building artifacts"
+    },
+    {
+      "ts": "2026-01-27T13:57:55.476Z",
+      "level": "info",
+      "event": "DRAWIO",
+      "msg": "building drawio xml"
+    },
+    {
+      "ts": "2026-01-27T13:57:55.477Z",
+      "level": "info",
+      "event": "STEP_WRITE_FILES",
+      "msg": "event received"
+    },
+    {
+      "ts": "2026-01-27T13:57:55.480Z",
+      "level": "info",
+      "event": "STEP_WRITE_FILES",
+      "msg": "writing docs files"
+    },
+    {
+      "ts": "2026-01-27T13:57:55.552Z",
+      "level": "info",
+      "event": "STEP_GITOPS",
+      "msg": "event received"
+    },
+    {
+      "ts": "2026-01-27T13:57:55.562Z",
+      "level": "info",
+      "event": "DONE",
+      "msg": "job completed"
+    }
+  ],
+  "result": {
+    "meta": {
+      "id": "a0af34b1",
+      "date": "2026-01-27",
+      "kind": "blueprint",
+      "slug": "blueprint-2026-01-27-a0af34b1",
+      "title": "BLUEPRINT 2026-01-27 - a0af34b1",
+      "diagramPath": "diagrams/blueprint-2026-01-27-a0af34b1.drawio"
+    },
+    "written": [
+      "blueprints/blueprint-2026-01-27-a0af34b1.md",
+      "decisions/ADR-2026-01-27-a0af34b1.md",
+      "diagrams/blueprint-2026-01-27-a0af34b1.drawio"
+    ],
+    "gitops": {
+      "enabled": false
+    }
+  },
+  "error": null
+}

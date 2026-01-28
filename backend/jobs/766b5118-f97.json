@@ -1,0 +1,168 @@
+{
+  "id": "766b5118-f97",
+  "workspace": "arqea",
+  "createdBy": "arqea",
+  "kind": "blueprint",
+  "prompt": "frontend conectando com acl e depois a um banco de dados sql server",
+  "status": "DONE",
+  "createdAt": "2026-01-27T20:48:28.242Z",
+  "updatedAt": "2026-01-27T20:48:30.596Z",
+  "steps": [
+    {
+      "ts": "2026-01-27T20:48:28.244Z",
+      "level": "info",
+      "event": "ENQUEUED",
+      "msg": "job queued"
+    },
+    {
+      "ts": "2026-01-27T20:48:28.248Z",
+      "level": "info",
+      "event": "JOB_START",
+      "msg": "event received"
+    },
+    {
+      "ts": "2026-01-27T20:48:28.251Z",
+      "level": "info",
+      "event": "AUDIT",
+      "msg": "workspace=arqea createdBy=arqea"
+    },
+    {
+      "ts": "2026-01-27T20:48:28.254Z",
+      "level": "info",
+      "event": "JOB_START",
+      "msg": "job running"
+    },
+    {
+      "ts": "2026-01-27T20:48:28.255Z",
+      "level": "info",
+      "event": "STEP_PREVIEW",
+      "msg": "event received"
+    },
+    {
+      "ts": "2026-01-27T20:48:28.259Z",
+      "level": "info",
+      "event": "STEP_PREVIEW",
+      "msg": "generating preview"
+    },
+    {
+      "ts": "2026-01-27T20:48:28.264Z",
+      "level": "info",
+      "event": "STEP_BUILD_ARTIFACTS",
+      "msg": "event received"
+    },
+    {
+      "ts": "2026-01-27T20:48:28.267Z",
+      "level": "info",
+      "event": "STEP_BUILD_ARTIFACTS",
+      "msg": "building artifacts"
+    },
+    {
+      "ts": "2026-01-27T20:48:28.276Z",
+      "level": "info",
+      "event": "STEP_DRAWIO",
+      "msg": "event received"
+    },
+    {
+      "ts": "2026-01-27T20:48:28.279Z",
+      "level": "info",
+      "event": "STEP_DRAWIO",
+      "msg": "building drawio xml"
+    },
+    {
+      "ts": "2026-01-27T20:48:28.282Z",
+      "level": "info",
+      "event": "STEP_WRITE_FILES",
+      "msg": "event received"
+    },
+    {
+      "ts": "2026-01-27T20:48:28.285Z",
+      "level": "info",
+      "event": "STEP_WRITE_FILES",
+      "msg": "writing docs files + catalog"
+    },
+    {
+      "ts": "2026-01-27T20:48:28.317Z",
+      "level": "info",
+      "event": "STEP_GITOPS",
+      "msg": "event received"
+    },
+    {
+      "ts": "2026-01-27T20:48:28.321Z",
+      "level": "info",
+      "event": "STEP_GITOPS",
+      "msg": "committing docs"
+    },
+    {
+      "ts": "2026-01-27T20:48:30.596Z",
+      "level": "info",
+      "event": "DONE",
+      "msg": "job completed"
+    }
+  ],
+  "result": {
+    "meta": {
+      "id": "30ba8d31",
+      "date": "2026-01-27",
+      "kind": "blueprint",
+      "slug": "blueprint-2026-01-27-30ba8d31",
+      "title": "BLUEPRINT 2026-01-27 - 30ba8d31",
+      "diagramPath": "diagrams/blueprint-2026-01-27-30ba8d31.drawio"
+    },
+    "written": [
+      "blueprints/blueprint-2026-01-27-30ba8d31.md",
+      "decisions/ADR-2026-01-27-30ba8d31.md",
+      "diagrams/blueprint-2026-01-27-30ba8d31.drawio"
+    ],
+    "gitops": {
+      "committed": true,
+      "lastCommit": {
+        "hash": "d0f3929d0565b7e9e6127a113c1c34227e74056e",
+        "date": "2026-01-27T17:48:30-03:00",
+        "message": "AaaS: blueprint blueprint-2026-01-27-30ba8d31",
+        "refs": "HEAD -> main",
+        "body": "",
+        "author_name": "Ermundo Rocha",
+        "author_email": "ermundo.rocha@gmail.com"
+      }
+    }
+  },
+  "error": null,
+  "ctx": {
+    "preview": "# Preview de Arquitetura (Mock)\n\n            ## Objetivo\n            Validar o fluxo de Arquitetura como Serviço (AaaS) sem dependência externa.\n\n            ## Escopo\n            - Frontend estático\n            - Backend seguro\n            - Geração de artefatos arquiteturais\n\n            ## Arquitetura (alto nível)\n            Front → Backend → Artefatos → GitOps → Publicação\n\n            ## NFRs\n            - Segurança\n            - Rastreabilidade\n            - Recuperabilidade\n            - Evolução incremental\n\n            ## Próximos Passos\n            - Persistir artefatos\n            - Versionar em Git\n            - Automatizar diagramas\n            ",
+    "artifacts": {
+      "meta": {
+        "id": "30ba8d31",
+        "date": "2026-01-27",
+        "kind": "blueprint",
+        "slug": "blueprint-2026-01-27-30ba8d31",
+        "title": "BLUEPRINT 2026-01-27 - 30ba8d31",
+        "diagramPath": "diagrams/blueprint-2026-01-27-30ba8d31.drawio"
+      },
+      "nodes": [
+        {
+          "label": "Frontend (OnePage)"
+        },
+        {
+          "label": "Backend IA Seguro (API)"
+        },
+        {
+          "label": "Artefatos (docs/) + GitOps"
+        }
+      ],
+      "files": [
+        {
+          "path": "blueprints/blueprint-2026-01-27-30ba8d31.md",
+          "content": "# BLUEPRINT 2026-01-27 - 30ba8d31\n\n## Contexto do Pedido\nfrontend conectando com acl e depois a um banco de dados sql server\n\n## Preview Gerado\n# Preview de Arquitetura (Mock)\n\n            ## Objetivo\n            Validar o fluxo de Arquitetura como Serviço (AaaS) sem dependência externa.\n\n            ## Escopo\n            - Frontend estático\n            - Backend seguro\n            - Geração de artefatos arquiteturais\n\n            ## Arquitetura (alto nível)\n            Front → Backend → Artefatos → GitOps → Publicação\n\n            ## NFRs\n            - Segurança\n            - Rastreabilidade\n            - Recuperabilidade\n            - Evolução incremental\n\n            ## Próximos Passos\n            - Persistir artefatos\n            - Versionar em Git\n            - Automatizar diagramas\n            \n"
+        },
+        {
+          "path": "decisions/ADR-2026-01-27-30ba8d31.md",
+          "content": "# ADR 2026-01-27-30ba8d31: blueprint\n\n## Contexto\nfrontend conectando com acl e depois a um banco de dados sql server\n\n## Decisão\nAdotar uma abordagem incremental orientada a eventos, com artefatos versionados.\n\n## Consequências\n- Padronização e rastreabilidade dos artefatos\n- Facilidade de rollback (quando GitOps entrar)\n- Evolução por módulos independentes\n"
+        },
+        {
+          "path": "diagrams/blueprint-2026-01-27-30ba8d31.drawio",
+          "content": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<mxfile host=\"app.diagrams.net\">\n  <diagram name=\"BLUEPRINT 2026-01-27 - 30ba8d31\">\n    <mxGraphModel dx=\"1200\" dy=\"800\" grid=\"1\" gridSize=\"10\">\n      <root>\n        <mxCell id=\"0\"/><mxCell id=\"1\" parent=\"0\"/>\n\n        <mxCell id=\"2\" value=\"Frontend (OnePage)\" style=\"rounded=1;whiteSpace=wrap;html=1;\" vertex=\"1\" parent=\"1\">\n          <mxGeometry x=\"60\" y=\"140\" width=\"240\" height=\"90\" as=\"geometry\"/>\n        </mxCell>\n\n        <mxCell id=\"3\" value=\"Backend IA Seguro (API)\" style=\"rounded=1;whiteSpace=wrap;html=1;\" vertex=\"1\" parent=\"1\">\n          <mxGeometry x=\"360\" y=\"140\" width=\"280\" height=\"90\" as=\"geometry\"/>\n        </mxCell>\n\n        <mxCell id=\"4\" value=\"Artefatos (docs/) + GitOps\" style=\"rounded=1;whiteSpace=wrap;html=1;\" vertex=\"1\" parent=\"1\">\n          <mxGeometry x=\"720\" y=\"140\" width=\"280\" height=\"90\" as=\"geometry\"/>\n        </mxCell>\n\n        <mxCell id=\"5\" style=\"endArrow=block;html=1;\" edge=\"1\" parent=\"1\" source=\"2\" target=\"3\">\n          <mxGeometry relative=\"1\" as=\"geometry\"/>\n        </mxCell>\n\n        <mxCell id=\"6\" style=\"endArrow=block;html=1;\" edge=\"1\" parent=\"1\" source=\"3\" target=\"4\">\n          <mxGeometry relative=\"1\" as=\"geometry\"/>\n        </mxCell>\n\n      </root>\n    </mxGraphModel>\n  </diagram>\n</mxfile>"
+        }
+      ]
+    }
+  }
+}
