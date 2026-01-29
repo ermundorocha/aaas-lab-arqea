@@ -5,6 +5,9 @@
     "diagrams/blueprint-2026-01-28-042b8f55.drawio",
     "blueprints/adr-2026-01-29-3dd0a908.md",
     "decisions/ADR-2026-01-29-3dd0a908.md",
-    "diagrams/adr-2026-01-29-3dd0a908.drawio"
+    "diagrams/adr-2026-01-29-3dd0a908.drawio",
+    "blueprints/blueprint-2026-01-29-bda94d22.md",
+    "decisions/ADR-2026-01-29-bda94d22.md",
+    "diagrams/blueprint-2026-01-29-bda94d22.drawio"
   ]
 }
