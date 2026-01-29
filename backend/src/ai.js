@@ -1,78 +1,36 @@
+import { buildMockProvider } from "./ai/providers/mock.js";
+import { buildGeminiProvider } from "./ai/providers/gemini.js";
 
-export async function generatePreview({ prompt, kind = "blueprint", systemContext }) {
+// no futuro:
+// import { buildOpenAIProvider } from "./ai/providers/openai.js";
+// import { buildAzureOpenAIProvider } from "./ai/providers/azureOpenAI.js";
 
-  if (process.env.MOCK_AI === "true") {
-    return `# Preview de Arquitetura (Mock)
+function resolveProviderName() {
+  // Compatibilidade: se MOCK_AI=true, força mock
+  if ((process.env.MOCK_AI || "").toLowerCase() === "true") return "mock";
 
-            ## Objetivo
-            Validar o fluxo de Arquitetura como Serviço (AaaS) sem dependência externa.
+  // Novo padrão: escolher provider
+  return (process.env.AI_PROVIDER || "mock").toLowerCase();
+}
 
-            ## Escopo
-            - Frontend estático
-            - Backend seguro
-            - Geração de artefatos arquiteturais
+function buildProvider(name) {
+  if (name === "gemini") return buildGeminiProvider();
+  if (name === "mock") return buildMockProvider();
 
-            ## Arquitetura (alto nível)
-            Front → Backend → Artefatos → GitOps → Publicação
+  // fallback seguro
+  return buildMockProvider();
+}
 
-            ## NFRs
-            - Segurança
-            - Rastreabilidade
-            - Recuperabilidade
-            - Evolução incremental
+/**
+ * Função usada pelo pipeline.
+ * Mantém a mesma assinatura/uso atual.
+ */
+export async function generatePreview(job) {
+  const providerName = resolveProviderName();
+  const provider = buildProvider(providerName);
 
-            ## Próximos Passos
-            - Persistir artefatos
-            - Versionar em Git
-            - Automatizar diagramas
-            `;
-  }
-      
-  const apiKey = process.env.OPENAI_API_KEY;
-  const model = process.env.OPENAI_MODEL || "gpt-4.1-mini";
+  // padrão de log simples (você pode jogar isso nos steps depois)
+  // console.log(`[AI] provider=${provider.name} job=${job.id}`);
 
-  if (!apiKey) throw new Error("OPENAI_API_KEY ausente no .env");
-
-  const system = systemContext || `
-Você é um Arquiteto Corporativo (ARQEA). Responda em PT-BR.
-Produza um preview de artefato arquitetural no formato Markdown.
-Seja executivo, estruturado, com seções e itens acionáveis.
-`;
-
-  const user = `
-Tipo: ${kind}
-Pedido:
-${prompt}
-
-Entregue um Markdown enxuto (máx. 80 linhas), com:
-- Objetivo
-- Escopo
-- Arquitetura (alto nível)
-- NFRs
-- Próximos passos
-`;
-
-  const resp = await fetch("https://api.openai.com/v1/chat/completions", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${apiKey}`
-    },
-    body: JSON.stringify({
-      model,
-      temperature: 0.2,
-      messages: [
-        { role: "system", content: system.trim() },
-        { role: "user", content: user.trim() }
-      ]
-    })
-  });
-
-  if (!resp.ok) {
-    const txt = await resp.text();
-    throw new Error(`OpenAI error ${resp.status}: ${txt}`);
-  }
-
-  const data = await resp.json();
-  return data?.choices?.[0]?.message?.content || "";
+  return provider.generatePreview({ job });
 }
