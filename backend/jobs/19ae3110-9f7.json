@@ -1,0 +1,50 @@
+{
+  "id": "19ae3110-9f7",
+  "workspace": "default",
+  "createdBy": "default",
+  "kind": "adr",
+  "prompt": "Você é um Arquiteto de Soluções Cloud Senior. Sua tarefa é gerar um ADR sobre a migração de um monolito para microsserviços. Restrições: Use o template de Michael Nygard, foque em latência de rede e exporte o resultado estritamente em Markdown.",
+  "status": "FAILED",
+  "createdAt": "2026-01-29T21:02:22.347Z",
+  "updatedAt": "2026-01-29T21:02:30.630Z",
+  "steps": [
+    {
+      "ts": "2026-01-29T21:02:22.410Z",
+      "level": "info",
+      "event": "ENQUEUED",
+      "msg": "job queued"
+    },
+    {
+      "ts": "2026-01-29T21:02:22.414Z",
+      "level": "info",
+      "event": "JOB_START",
+      "msg": "event received"
+    },
+    {
+      "ts": "2026-01-29T21:02:22.429Z",
+      "level": "info",
+      "event": "AUDIT",
+      "msg": "workspace=default createdBy=default"
+    },
+    {
+      "ts": "2026-01-29T21:02:22.432Z",
+      "level": "info",
+      "event": "JOB_START",
+      "msg": "job running"
+    },
+    {
+      "ts": "2026-01-29T21:02:22.434Z",
+      "level": "info",
+      "event": "STEP_PREVIEW",
+      "msg": "event received"
+    },
+    {
+      "ts": "2026-01-29T21:02:22.436Z",
+      "level": "info",
+      "event": "STEP_PREVIEW",
+      "msg": "generating preview"
+    }
+  ],
+  "result": null,
+  "error": "Gemini did not return valid JSON"
+}
