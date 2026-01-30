@@ -157,8 +157,24 @@ app.post("/api/mvp1/generate", authWorkspace, async (req, res, next) => {
             "mvp-user";
 
       const job = createJob({ workspace, kind, prompt, createdBy });
-      enqueueJob(job.id);
-      res.json({ jobId: job.id });
+      
+      // dispara assíncrono
+      try {
+        emit("JOB_START", { jobId: job.id });
+        addStep(job.id, { level: "info", event: "ENQUEUED", msg: "job queued" });
+      } catch (e) {
+        setError(job.id, String(e?.message || e));
+      }
+
+      // resposta imediata (não bloqueia)
+      res.status(202).json({
+        ok: true,
+        jobId: job.id,
+        statusUrl: `/api/jobs/${job.id}`
+      });
+
+      //enqueueJob(job.id);
+      //res.json({ jobId: job.id });
     } catch (e) {
       next(e); 
     }

@@ -1,0 +1,12 @@
+{
+  "id": "0863eac6-b2c",
+  "workspace": "arqea",
+  "createdBy": "mvp-user",
+  "kind": "blueprint",
+  "prompt": "Teste via tunnel",
+  "status": "QUEUED",
+  "createdAt": "2026-01-30T15:13:16.866Z",
+  "updatedAt": "2026-01-30T15:13:16.869Z",
+  "steps": [],
+  "ctx": {}
+}
