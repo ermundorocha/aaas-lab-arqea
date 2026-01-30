@@ -1,0 +1,137 @@
+{
+  "id": "59139bb2-291",
+  "workspace": "arqea",
+  "createdBy": "mvp-user",
+  "kind": "adr",
+  "prompt": "Você é um Arquiteto de Soluções Cloud Senior. Sua tarefa é gerar um ADR sobre a migração de um monolito para microsserviços. Restrições: Use o template de Michael Nygard, foque em latência de rede e exporte o resultado estritamente em Markdown.",
+  "status": "FAILED",
+  "createdAt": "2026-01-30T15:20:59.170Z",
+  "updatedAt": "2026-01-30T15:21:11.383Z",
+  "steps": [
+    {
+      "ts": "2026-01-30T15:20:59.173Z",
+      "level": "info",
+      "event": "ENQUEUED",
+      "msg": "job queued"
+    },
+    {
+      "ts": "2026-01-30T15:20:59.177Z",
+      "level": "info",
+      "event": "JOB_START",
+      "msg": "event received"
+    },
+    {
+      "ts": "2026-01-30T15:20:59.180Z",
+      "level": "info",
+      "event": "AUDIT",
+      "msg": "workspace=arqea createdBy=mvp-user"
+    },
+    {
+      "ts": "2026-01-30T15:20:59.183Z",
+      "level": "info",
+      "event": "JOB_START",
+      "msg": "job running"
+    },
+    {
+      "ts": "2026-01-30T15:20:59.185Z",
+      "level": "info",
+      "event": "STEP_PREVIEW",
+      "msg": "event received"
+    },
+    {
+      "ts": "2026-01-30T15:20:59.187Z",
+      "level": "info",
+      "event": "STEP_PREVIEW",
+      "msg": "generating preview"
+    },
+    {
+      "ts": "2026-01-30T15:21:11.367Z",
+      "level": "info",
+      "event": "STEP_BUILD_ARTIFACTS",
+      "msg": "event received"
+    },
+    {
+      "ts": "2026-01-30T15:21:11.369Z",
+      "level": "info",
+      "event": "STEP_BUILD_ARTIFACTS",
+      "msg": "building artifacts"
+    },
+    {
+      "ts": "2026-01-30T15:21:11.373Z",
+      "level": "info",
+      "event": "STEP_DRAWIO",
+      "msg": "event received"
+    },
+    {
+      "ts": "2026-01-30T15:21:11.375Z",
+      "level": "info",
+      "event": "STEP_DRAWIO",
+      "msg": "building drawio xml"
+    },
+    {
+      "ts": "2026-01-30T15:21:11.381Z",
+      "level": "info",
+      "event": "STEP_WRITE_FILES",
+      "msg": "event received"
+    }
+  ],
+  "ctx": {
+    "preview": {
+      "title": "AaaS MVP: Monolith to Microservices Migration ADR",
+      "summary": "This document outlines the architectural decision to migrate a monolithic application to a microservices architecture, with a dedicated focus on mitigating network latency concerns.",
+      "artifacts": [
+        {
+          "path": "adrs/adr-001-monolith-to-microservices-network-latency.md",
+          "contentType": "text/markdown",
+          "content": "# 1. Migration from Monolith to Microservices Addressing Network Latency\n\n## Status\nProposed\n\n## Context\nOur current monolithic application faces challenges with scalability, maintainability, and independent deployment cycles. To address these issues, a migration to a microservices architecture has been proposed. However, a significant concern with adopting a distributed system is the potential increase in network latency between services, which could negatively impact user experience and overall system performance. This ADR aims to document the decision to migrate, while explicitly acknowledging and proposing strategies to mitigate network latency issues inherent in such a transformation.\n\n## Decision\nWe decide to proceed with the migration from our monolithic application to a microservices architecture. This transition will be executed incrementally, starting with extracting bounded contexts into independent services. Critical attention will be paid to service interaction patterns and data locality to minimize network hops and data transfer overhead.\n\nSpecific strategies to address network latency include:\n1.  **Careful Bounded Context Design:** Services will be designed to encapsulate highly cohesive functionalities, reducing the need for chatty inter-service communication.\n2.  **Asynchronous Communication:** Favoring message queues (e.g., Kafka, RabbitMQ) for non-critical, eventually consistent interactions to decouple services and absorb transient latency spikes.\n3.  **API Gateway Aggregation:** Implementing an API Gateway to aggregate multiple microservice calls for client requests, reducing the number of round-trips from the client.\n4.  **Data Caching:** Implementing caching mechanisms (e.g., Redis) for frequently accessed, read-heavy data, reducing direct database or service calls.\n5.  **Service Collocation/Proximity:** Deploying tightly coupled services within the same availability zone or region where feasible, or even within the same host using sidecars (e.g., Istio, Envoy) for very high-throughput, low-latency communication.\n6.  **Optimized Serialization Formats:** Using efficient serialization formats (e.g., Protobuf, Avro) over less efficient ones (e.g., JSON) for inter-service communication where performance is critical.\n7.  **Circuit Breakers and Retries:** Implementing robust fault tolerance patterns to handle network partitions and transient failures gracefully, preventing cascading failures.\n\n## Consequences\n\n### Positive:\n*   Improved scalability and fault isolation, allowing individual services to scale independently.\n*   Enhanced agility and faster release cycles for individual service teams.\n*   Better technology stack flexibility for different service needs.\n*   Explicit focus on network latency mitigations leads to a more robust and performant distributed system design from the outset.\n*   Reduced risk of system-wide failures due to component isolation.\n\n### Negative:\n*   Increased operational complexity due to managing distributed systems, requiring advanced monitoring, logging, and tracing.\n*   Potential for increased network latency if mitigation strategies are not effectively implemented, leading to performance degradation.\n*   Higher initial development overhead for setting up new infrastructure, service discovery, and communication patterns.\n*   Challenges with distributed transactions and data consistency across service boundaries.\n*   Increased resource consumption (CPU, memory, network bandwidth) due to additional infrastructure components (e.g., message brokers, API gateways, sidecars)."
+        }
+      ]
+    },
+    "artifacts": {
+      "meta": {
+        "id": "49e675a9",
+        "date": "2026-01-30",
+        "kind": "adr",
+        "slug": "adr-2026-01-30-49e675a9",
+        "title": "ADR 2026-01-30 - 49e675a9",
+        "diagramPath": "diagrams/adr-2026-01-30-49e675a9.drawio"
+      },
+      "nodes": [
+        {
+          "label": "Frontend (OnePage)"
+        },
+        {
+          "label": "Backend IA Seguro (API)"
+        },
+        {
+          "label": "Artefatos (docs/) + GitOps"
+        }
+      ],
+      "files": [
+        {
+          "path": "blueprints/adr-2026-01-30-49e675a9.md",
+          "content": "# ADR 2026-01-30 - 49e675a9\n\n## Contexto do Pedido\nVocê é um Arquiteto de Soluções Cloud Senior. Sua tarefa é gerar um ADR sobre a migração de um monolito para microsserviços. Restrições: Use o template de Michael Nygard, foque em latência de rede e exporte o resultado estritamente em Markdown.\n\n## Preview Gerado\n[object Object]\n"
+        },
+        {
+          "path": "decisions/ADR-2026-01-30-49e675a9.md",
+          "content": "# ADR 2026-01-30-49e675a9: adr\n\n## Contexto\nVocê é um Arquiteto de Soluções Cloud Senior. Sua tarefa é gerar um ADR sobre a migração de um monolito para microsserviços. Restrições: Use o template de Michael Nygard, foque em latência de rede e exporte o resultado estritamente em Markdown.\n\n## Decisão\nAdotar uma abordagem incremental orientada a eventos, com artefatos versionados.\n\n## Consequências\n- Padronização e rastreabilidade dos artefatos\n- Facilidade de rollback (quando GitOps entrar)\n- Evolução por módulos independentes\n"
+        },
+        {
+          "path": "diagrams/adr-2026-01-30-49e675a9.drawio",
+          "content": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<mxfile host=\"app.diagrams.net\">\n  <diagram name=\"ADR 2026-01-30 - 49e675a9\">\n    <mxGraphModel dx=\"1200\" dy=\"800\" grid=\"1\" gridSize=\"10\">\n      <root>\n        <mxCell id=\"0\"/><mxCell id=\"1\" parent=\"0\"/>\n\n        <mxCell id=\"2\" value=\"Frontend (OnePage)\" style=\"rounded=1;whiteSpace=wrap;html=1;\" vertex=\"1\" parent=\"1\">\n          <mxGeometry x=\"60\" y=\"140\" width=\"240\" height=\"90\" as=\"geometry\"/>\n        </mxCell>\n\n        <mxCell id=\"3\" value=\"Backend IA Seguro (API)\" style=\"rounded=1;whiteSpace=wrap;html=1;\" vertex=\"1\" parent=\"1\">\n          <mxGeometry x=\"360\" y=\"140\" width=\"280\" height=\"90\" as=\"geometry\"/>\n        </mxCell>\n\n        <mxCell id=\"4\" value=\"Artefatos (docs/) + GitOps\" style=\"rounded=1;whiteSpace=wrap;html=1;\" vertex=\"1\" parent=\"1\">\n          <mxGeometry x=\"720\" y=\"140\" width=\"280\" height=\"90\" as=\"geometry\"/>\n        </mxCell>\n\n        <mxCell id=\"5\" style=\"endArrow=block;html=1;\" edge=\"1\" parent=\"1\" source=\"2\" target=\"3\">\n          <mxGeometry relative=\"1\" as=\"geometry\"/>\n        </mxCell>\n\n        <mxCell id=\"6\" style=\"endArrow=block;html=1;\" edge=\"1\" parent=\"1\" source=\"3\" target=\"4\">\n          <mxGeometry relative=\"1\" as=\"geometry\"/>\n        </mxCell>\n\n      </root>\n    </mxGraphModel>\n  </diagram>\n</mxfile>"
+        }
+      ]
+    }
+  },
+  "result": {
+    "meta": {
+      "id": "49e675a9",
+      "date": "2026-01-30",
+      "kind": "adr",
+      "slug": "adr-2026-01-30-49e675a9",
+      "title": "ADR 2026-01-30 - 49e675a9",
+      "diagramPath": "diagrams/adr-2026-01-30-49e675a9.drawio"
+    }
+  },
+  "error": "job is not defined"
+}
