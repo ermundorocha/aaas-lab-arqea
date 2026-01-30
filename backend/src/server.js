@@ -141,20 +141,22 @@ app.post("/api/mvp1/preview", authWorkspace, async (req, res) => {
   }
 });
 
-app.post("/api/mvp1/generate", authWorkspace, async (req, res) => {
-  try {
-    const workspace = req.workspace;
-    const { kind, prompt } = req.body || {};
+app.post("/api/mvp1/generate", authWorkspace, async (req, res, next) => {
+    try {
+      const workspace = req.workspace;
+      const { kind, prompt } = req.body || {};
 
-    if (!workspace) return res.status(400).json({ error: "workspace_required" });
+      if (!workspace) return res.status(400).json({ error: "workspace_required" });
 
-    const ALLOWED = new Set(["blueprint","adr","drawio"]);
-    if (!ALLOWED.has(kind)) return res.status(400).json({ error: "invalid_kind", allowed: [...ALLOWED] });
+      const ALLOWED = new Set(["blueprint","adr","drawio"]);
+      if (!ALLOWED.has(kind)) return res.status(400).json({ error: "invalid_kind", allowed: [...ALLOWED] });
 
-    const job = createJob({ workspace, kind, prompt });
-    enqueueJob(job.id);
-    res.json({ jobId: job.id });
-  } catch (e) { next(e); }
+      const job = createJob({ workspace, kind, prompt });
+      enqueueJob(job.id);
+      res.json({ jobId: job.id });
+    } catch (e) {
+      next(e); 
+    }
   
   // const { prompt, kind } = req.body || {};
   // if (!prompt) return res.status(400).json({ error: "prompt required" });
