@@ -121,10 +121,11 @@ Kind: ${job.kind}
 Pedido: ${job.prompt}
 
 REGRAS:
-- Retorne um objeto JSON com: title, summary, artifacts[]
-- artifacts[].path deve ficar dentro de docs/workspaces/${job.workspace}/...
-- artifacts[].contentType: "text/markdown" ou "application/json"
-- artifacts[].content deve ser o conteúdo do arquivo.
+- Retorne SOMENTE artefatos do kind solicitado: ${job.kind}
+- paths devem ser RELATIVOS (não incluir docs/workspaces)
+- blueprint -> apenas .md em blueprints/
+- adr      -> apenas .md em adrs/
+- drawio   -> apenas .drawio (XML) em drawio/
 `.trim();
 
       // Chamada estruturada + parse defensivo + 1 repair

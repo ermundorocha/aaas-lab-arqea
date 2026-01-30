@@ -7,26 +7,42 @@ const JOBS_DIR = path.resolve(process.env.JOBS_DIR || "./jobs");
 function ensureDir() {
   fs.mkdirSync(JOBS_DIR, { recursive: true });
 }
-
-export function createJob({ kind, prompt, workspace = "default", createdBy = "unknown" }) {
-  ensureDir();
-  const id = crypto.randomUUID().slice(0, 12);
+export function createJob({ workspace, kind, prompt }) {
   const job = {
-    id,
+    id: crypto.randomUUID().slice(0, 12),
     workspace,
     createdBy,
-    kind: kind || "blueprint",
+    kind,
     prompt,
     status: "QUEUED",
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
     steps: [],
-    result: null,
-    error: null
+    ctx: {}
   };
-  writeJob(job);
+  saveJob(job);
   return job;
 }
+
+// export function createJob({ kind, prompt, workspace = "default", createdBy = "unknown" }) {
+//   ensureDir();
+//   const id = crypto.randomUUID().slice(0, 12);
+//   const job = {
+//     id,
+//     workspace,
+//     createdBy,
+//     kind: kind || "blueprint",
+//     prompt,
+//     status: "QUEUED",
+//     createdAt: new Date().toISOString(),
+//     updatedAt: new Date().toISOString(),
+//     steps: [],
+//     result: null,
+//     error: null
+//   };
+//   writeJob(job);
+//   return job;
+// }
 
 export function writeJob(job) {
   ensureDir();

@@ -83,26 +83,38 @@ export function registerPipeline() {
   });
 
   on("STEP_WRITE_FILES", async ({ jobId }) => {
-    const job = readJob(jobId);
-    if (!job) throw new Error("job not found");
+    const preview = job.ctx.preview;
+    const artifacts = normalizeArtifacts(job, preview);
 
-    const artifacts = job?.ctx?.artifacts;
-    if (!artifacts) {
-      addStep(jobId, { level: "warn", event: "STEP_WRITE_FILES", msg: "missing artifacts, rebuilding" });
-      return emit("STEP_BUILD_ARTIFACTS", { jobId });
+    const written = [];
+    for (const a of artifacts) {
+      writeTextFile(a.absPath, a.content); // seu helper atual
+      written.push(a.absPath);
     }
 
-    addStep(jobId, { level: "info", event: "STEP_WRITE_FILES", msg: "writing docs files + catalog" });
+    job.ctx.written = written;      // ✅ só o que foi pedido
+    job.ctx.files = written;        // se você usa files para UI
+    
+    // const job = readJob(jobId);
+    // if (!job) throw new Error("job not found");
 
-    //writeFilesToDocs({ files: artifacts.files });
-    //updateCatalog({ newFiles: artifacts.files.map(f => f.path) });
+    // const artifacts = job?.ctx?.artifacts;
+    // if (!artifacts) {
+    //   addStep(jobId, { level: "warn", event: "STEP_WRITE_FILES", msg: "missing artifacts, rebuilding" });
+    //   return emit("STEP_BUILD_ARTIFACTS", { jobId });
+    // }
 
-    writeFilesToDocs({ workspace: job.workspace, files: artifacts.files });
-    updateCatalog({ workspace: job.workspace, newFiles: artifacts.files.map(f => f.path) });
+    // addStep(jobId, { level: "info", event: "STEP_WRITE_FILES", msg: "writing docs files + catalog" });
 
-    mergeResult(jobId, { written: artifacts.files.map(f => f.path) });
+    // //writeFilesToDocs({ files: artifacts.files });
+    // //updateCatalog({ newFiles: artifacts.files.map(f => f.path) });
 
-    emit("STEP_GITOPS", { jobId });
+    // writeFilesToDocs({ workspace: job.workspace, files: artifacts.files });
+    // updateCatalog({ workspace: job.workspace, newFiles: artifacts.files.map(f => f.path) });
+
+    // mergeResult(jobId, { written: artifacts.files.map(f => f.path) });
+
+    // emit("STEP_GITOPS", { jobId });
   });
 
   on("STEP_GITOPS", async ({ jobId }) => {
@@ -128,4 +140,27 @@ export function registerPipeline() {
     addStep(jobId, { level: "info", event: "DONE", msg: "job completed" });
   });
 
+}
+
+function normalizeArtifacts(job, preview) {
+  const ws = job.workspace;
+  const kind = job.kind;
+
+  const allowed = {
+    blueprint: { dir: "blueprints/", exts: [".md"], contentTypes: ["text/markdown"] },
+    adr:       { dir: "adrs/",       exts: [".md"], contentTypes: ["text/markdown"] },
+    drawio:    { dir: "drawio/",     exts: [".drawio"], contentTypes: ["application/xml"] }
+  }[kind];
+
+  const artifacts = (preview?.artifacts || [])
+    .filter(a => a && typeof a.path === "string" && typeof a.content === "string")
+    .filter(a => a.path.startsWith(allowed.dir))
+    .filter(a => allowed.exts.some(ext => a.path.toLowerCase().endsWith(ext)))
+    .filter(a => allowed.contentTypes.includes(a.contentType));
+
+  // aplica root do workspace AQUI (não na IA)
+  return artifacts.map(a => ({
+    ...a,
+    absPath: `docs/workspaces/${ws}/${a.path}` // caminho final de gravação
+  }));
 }

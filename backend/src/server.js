@@ -35,6 +35,7 @@ app.use(cors({ origin: true }));
 // --- Config ---
 const PORT = process.env.PORT || 8080;
 const BASIC_TOKEN = process.env.BASIC_TOKEN || "change-me";
+const ALLOWED_KINDS = new Set(["blueprint", "adr", "drawio"]);
 
 // --- Auth simples (por header) ---
 function auth(req, res, next) {
@@ -141,28 +142,39 @@ app.post("/api/mvp1/preview", authWorkspace, async (req, res) => {
 });
 
 app.post("/api/mvp1/generate", authWorkspace, async (req, res) => {
-  const { prompt, kind } = req.body || {};
-  if (!prompt) return res.status(400).json({ error: "prompt required" });
+  const workspace = req.workspace; // vindo do middleware authWorkspace
+  const { kind, prompt } = req.body || {};
 
-  const job = createJob({ kind: kind || "blueprint", 
-                          prompt,
-                          workspace: req.workspace || "default",
-                          createdBy: req.workspace || "default" });
+  if (!workspace) return res.status(400).json({ error: "workspace_required" });
+  if (!ALLOWED_KINDS.has(kind)) return res.status(400).json({ error: "invalid_kind", allowed: [...ALLOWED_KINDS] });
+  if (!prompt || typeof prompt !== "string") return res.status(400).json({ error: "prompt_required" });
 
-  // dispara assíncrono
-  try {
-    emit("JOB_START", { jobId: job.id });
-    addStep(job.id, { level: "info", event: "ENQUEUED", msg: "job queued" });
-  } catch (e) {
-    setError(job.id, String(e?.message || e));
-  }
+  const job = createJob({ workspace, kind, prompt });
+  enqueueJob(job.id); // ou seu mecanismo atual
+  res.json({ jobId: job.id });
+  
+  // const { prompt, kind } = req.body || {};
+  // if (!prompt) return res.status(400).json({ error: "prompt required" });
 
-  // resposta imediata (não bloqueia)
-  res.status(202).json({
-    ok: true,
-    jobId: job.id,
-    statusUrl: `/api/jobs/${job.id}`
-  });
+  // const job = createJob({ kind: kind || "blueprint", 
+  //                         prompt,
+  //                         workspace: req.workspace || "default",
+  //                         createdBy: req.workspace || "default" });
+
+  // // dispara assíncrono
+  // try {
+  //   emit("JOB_START", { jobId: job.id });
+  //   addStep(job.id, { level: "info", event: "ENQUEUED", msg: "job queued" });
+  // } catch (e) {
+  //   setError(job.id, String(e?.message || e));
+  // }
+
+  // // resposta imediata (não bloqueia)
+  // res.status(202).json({
+  //   ok: true,
+  //   jobId: job.id,
+  //   statusUrl: `/api/jobs/${job.id}`
+  // });
 });
 
 // --- Catálogo (lê docs/index.json) ---

@@ -14,7 +14,7 @@ export const ArtifactPlanSchema = {
         required: ["path", "contentType", "content"],
         properties: {
           path: { type: "string", minLength: 3 },
-          contentType: { type: "string", enum: ["text/markdown", "application/json"] },
+          contentType: { type: "string", enum: ["text/markdown", "application/json", "application/xml"] },
           content: { type: "string", minLength: 1 }
         }
       }
