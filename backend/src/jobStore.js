@@ -7,7 +7,7 @@ const JOBS_DIR = path.resolve(process.env.JOBS_DIR || "./jobs");
 function ensureDir() {
   fs.mkdirSync(JOBS_DIR, { recursive: true });
 }
-export function createJob({ workspace, kind, prompt }) {
+export function createJob({ workspace, kind, prompt, createdBy }) {
   const job = {
     id: crypto.randomUUID().slice(0, 12),
     workspace,
