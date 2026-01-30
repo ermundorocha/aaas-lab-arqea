@@ -20,7 +20,7 @@ export function createJob({ workspace, kind, prompt, createdBy }) {
     steps: [],
     ctx: {}
   };
-  saveJob(job);
+  writeJob(job);
   return job;
 }
 
