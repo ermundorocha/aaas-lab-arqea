@@ -151,7 +151,12 @@ app.post("/api/mvp1/generate", authWorkspace, async (req, res, next) => {
       const ALLOWED = new Set(["blueprint","adr","drawio"]);
       if (!ALLOWED.has(kind)) return res.status(400).json({ error: "invalid_kind", allowed: [...ALLOWED] });
 
-      const job = createJob({ workspace, kind, prompt });
+      const createdBy =
+            req.headers["x-aaas-user"] ||
+            req.headers["x-forwarded-user"] ||
+            "mvp-user";
+
+      const job = createJob({ workspace, kind, prompt, createdBy });
       enqueueJob(job.id);
       res.json({ jobId: job.id });
     } catch (e) {
