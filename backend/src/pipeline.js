@@ -24,11 +24,38 @@ export function registerPipeline() {
 
     addStep(jobId, { level: "info", event: "STEP_PREVIEW", msg: "generating preview" });
 
-    const preview = await generatePreview({ prompt: job.prompt, kind: job.kind });
+    //const preview = await generatePreview({ prompt: job.prompt, kind: job.kind });
+    const preview = await generatePreview(job);
 
     setCtx(jobId, { preview });
     emit("STEP_BUILD_ARTIFACTS", { jobId });
   });
+
+  // on("STEP_BUILD_ARTIFACTS", async ({ jobId }) => {
+  //   const job = readJob(jobId);
+  //   if (!job) throw new Error("job not found");
+
+  //   const preview = job?.ctx?.preview;
+  //   if (!preview) {
+  //     // pré-requisito faltando → volta um step
+  //     addStep(jobId, { level: "warn", event: "STEP_BUILD_ARTIFACTS", msg: "missing preview, re-running preview" });
+  //     return emit("STEP_PREVIEW", { jobId });
+  //   }
+
+  //   addStep(jobId, { level: "info", event: "STEP_BUILD_ARTIFACTS", msg: "building artifacts" });
+
+  //   const artifacts = buildArtifacts({
+  //     kind: job.kind,
+  //     prompt: job.prompt,
+  //     previewMarkdown: preview
+  //   });
+
+  //   setCtx(jobId, { artifacts });
+  //   mergeResult(jobId, { meta: artifacts.meta }); // não sobrescreve o resto
+
+  //   if (job.kind === "drawio") return emit("STEP_DRAWIO", { jobId });
+  //   return emit("STEP_WRITE_FILES", { jobId });
+  // });
 
   on("STEP_BUILD_ARTIFACTS", async ({ jobId }) => {
     const job = readJob(jobId);
@@ -36,23 +63,18 @@ export function registerPipeline() {
 
     const preview = job?.ctx?.preview;
     if (!preview) {
-      // pré-requisito faltando → volta um step
       addStep(jobId, { level: "warn", event: "STEP_BUILD_ARTIFACTS", msg: "missing preview, re-running preview" });
       return emit("STEP_PREVIEW", { jobId });
     }
 
-    addStep(jobId, { level: "info", event: "STEP_BUILD_ARTIFACTS", msg: "building artifacts" });
+    addStep(jobId, { level: "info", event: "STEP_BUILD_ARTIFACTS", msg: "validating preview artifacts" });
 
-    const artifacts = buildArtifacts({
-      kind: job.kind,
-      prompt: job.prompt,
-      previewMarkdown: preview
-    });
+    // apenas registra meta do preview (opcional)
+    mergeResult(jobId, { meta: { title: preview.title, kind: job.kind } });
 
-    setCtx(jobId, { artifacts });
-    mergeResult(jobId, { meta: artifacts.meta }); // não sobrescreve o resto
-
-    emit("STEP_DRAWIO", { jobId });
+    // segue fluxo por kind
+    if (job.kind === "drawio") return emit("STEP_DRAWIO", { jobId });
+    return emit("STEP_WRITE_FILES", { jobId });
   });
 
   on("STEP_DRAWIO", async ({ jobId }) => {
@@ -83,38 +105,36 @@ export function registerPipeline() {
   });
 
   on("STEP_WRITE_FILES", async ({ jobId }) => {
-    const preview = job.ctx.preview;
-    const artifacts = normalizeArtifacts(job, preview);
+    const job = readJob(jobId);
+    if (!job) throw new Error("job not found");
 
-    const written = [];
-    for (const a of artifacts) {
-      writeTextFile(a.absPath, a.content); // seu helper atual
-      written.push(a.absPath);
+    addStep(jobId, { level: "info", event: "STEP_WRITE_FILES", msg: "writing docs files + catalog" });
+
+    const preview = job?.ctx?.preview;
+    if (!preview) {
+      addStep(jobId, { level: "warn", event: "STEP_WRITE_FILES", msg: "missing preview, re-running preview" });
+      return emit("STEP_PREVIEW", { jobId });
     }
 
-    job.ctx.written = written;      // ✅ só o que foi pedido
-    job.ctx.files = written;        // se você usa files para UI
-    
-    // const job = readJob(jobId);
-    // if (!job) throw new Error("job not found");
+    // ✅ pega SOMENTE artifacts do preview e filtra por kind
+    const files = normalizeArtifacts(job, preview).map(a => ({
+      path: a.path,
+      content: a.content,
+      contentType: a.contentType
+    }));
 
-    // const artifacts = job?.ctx?.artifacts;
-    // if (!artifacts) {
-    //   addStep(jobId, { level: "warn", event: "STEP_WRITE_FILES", msg: "missing artifacts, rebuilding" });
-    //   return emit("STEP_BUILD_ARTIFACTS", { jobId });
-    // }
+    if (!files.length) {
+      throw new Error(`no_artifacts_for_kind:${job.kind}`);
+    }
 
-    // addStep(jobId, { level: "info", event: "STEP_WRITE_FILES", msg: "writing docs files + catalog" });
+    writeFilesToDocs({ workspace: job.workspace, files });
+    updateCatalog({ workspace: job.workspace, newFiles: files.map(f => f.path) });
 
-    // //writeFilesToDocs({ files: artifacts.files });
-    // //updateCatalog({ newFiles: artifacts.files.map(f => f.path) });
+    // ✅ written só com o solicitado
+    mergeResult(jobId, { written: files.map(f => f.path) });
 
-    // writeFilesToDocs({ workspace: job.workspace, files: artifacts.files });
-    // updateCatalog({ workspace: job.workspace, newFiles: artifacts.files.map(f => f.path) });
-
-    // mergeResult(jobId, { written: artifacts.files.map(f => f.path) });
-
-    // emit("STEP_GITOPS", { jobId });
+    // ✅ segue pipeline
+    emit("STEP_GITOPS", { jobId });
   });
 
   on("STEP_GITOPS", async ({ jobId }) => {
@@ -143,24 +163,20 @@ export function registerPipeline() {
 }
 
 function normalizeArtifacts(job, preview) {
-  const ws = job.workspace;
   const kind = job.kind;
 
-  const allowed = {
+  const allowedMap = {
     blueprint: { dir: "blueprints/", exts: [".md"], contentTypes: ["text/markdown"] },
     adr:       { dir: "adrs/",       exts: [".md"], contentTypes: ["text/markdown"] },
     drawio:    { dir: "drawio/",     exts: [".drawio"], contentTypes: ["application/xml"] }
-  }[kind];
+  };
 
-  const artifacts = (preview?.artifacts || [])
+  const allowed = allowedMap[kind];
+  if (!allowed) return [];
+
+  return (preview?.artifacts || [])
     .filter(a => a && typeof a.path === "string" && typeof a.content === "string")
     .filter(a => a.path.startsWith(allowed.dir))
     .filter(a => allowed.exts.some(ext => a.path.toLowerCase().endsWith(ext)))
     .filter(a => allowed.contentTypes.includes(a.contentType));
-
-  // aplica root do workspace AQUI (não na IA)
-  return artifacts.map(a => ({
-    ...a,
-    absPath: `docs/workspaces/${ws}/${a.path}` // caminho final de gravação
-  }));
 }

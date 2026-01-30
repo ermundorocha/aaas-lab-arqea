@@ -1,0 +1,137 @@
+{
+  "id": "a4611434-e47",
+  "workspace": "arqea",
+  "createdBy": "ermundo",
+  "kind": "blueprint",
+  "prompt": "Teste job is not defined",
+  "status": "FAILED",
+  "createdAt": "2026-01-30T18:51:58.453Z",
+  "updatedAt": "2026-01-30T18:52:07.177Z",
+  "steps": [
+    {
+      "ts": "2026-01-30T18:51:58.455Z",
+      "level": "info",
+      "event": "ENQUEUED",
+      "msg": "job queued"
+    },
+    {
+      "ts": "2026-01-30T18:51:58.457Z",
+      "level": "info",
+      "event": "JOB_START",
+      "msg": "event received"
+    },
+    {
+      "ts": "2026-01-30T18:51:58.459Z",
+      "level": "info",
+      "event": "AUDIT",
+      "msg": "workspace=arqea createdBy=ermundo"
+    },
+    {
+      "ts": "2026-01-30T18:51:58.462Z",
+      "level": "info",
+      "event": "JOB_START",
+      "msg": "job running"
+    },
+    {
+      "ts": "2026-01-30T18:51:58.463Z",
+      "level": "info",
+      "event": "STEP_PREVIEW",
+      "msg": "event received"
+    },
+    {
+      "ts": "2026-01-30T18:51:58.465Z",
+      "level": "info",
+      "event": "STEP_PREVIEW",
+      "msg": "generating preview"
+    },
+    {
+      "ts": "2026-01-30T18:52:07.111Z",
+      "level": "info",
+      "event": "STEP_BUILD_ARTIFACTS",
+      "msg": "event received"
+    },
+    {
+      "ts": "2026-01-30T18:52:07.152Z",
+      "level": "info",
+      "event": "STEP_BUILD_ARTIFACTS",
+      "msg": "building artifacts"
+    },
+    {
+      "ts": "2026-01-30T18:52:07.159Z",
+      "level": "info",
+      "event": "STEP_DRAWIO",
+      "msg": "event received"
+    },
+    {
+      "ts": "2026-01-30T18:52:07.170Z",
+      "level": "info",
+      "event": "STEP_DRAWIO",
+      "msg": "building drawio xml"
+    },
+    {
+      "ts": "2026-01-30T18:52:07.174Z",
+      "level": "info",
+      "event": "STEP_WRITE_FILES",
+      "msg": "event received"
+    }
+  ],
+  "ctx": {
+    "preview": {
+      "title": "AaaS MVP Blueprint",
+      "summary": "This blueprint outlines the initial design and core components for the Architecture as a Service (AaaS) Minimum Viable Product, focusing on key functionalities and architectural decisions to enable automated artifact generation from architectural models.",
+      "artifacts": [
+        {
+          "path": "blueprints/aaas-mvp-overview.md",
+          "contentType": "text/markdown",
+          "content": "# Blueprint: Architecture as a Service (AaaS) - Minimum Viable Product (MVP)\n\n## 1. Introdução\n\nEste documento detalha o blueprint inicial para o MVP (Produto Mínimo Viável) da plataforma \"Architecture as a Service\" (AaaS). O objetivo é prover uma base para a automatização e padronização de entregas arquiteturais, permitindo que times de desenvolvimento e arquitetos colaborem de forma mais eficiente.\n\n## 2. Escopo do MVP\n\nO MVP foca nas seguintes capacidades essenciais:\n\n*   **Definição de Blueprints**: Capacidade de criar e gerenciar blueprints arquiteturais (modelos) através de arquivos Markdown e schemas JSON.\n*   **Geração de Artefatos**: Geração automatizada de artefatos baseados em blueprints (e.g., documentos, diagramas, configurações de infraestrutura básica).\n*   **Catálogo de Blueprints**: Uma interface simples para explorar e selecionar blueprints existentes.\n*   **Execução de Jobs**: Um mecanismo para executar \"jobs\" de geração de artefatos a partir de blueprints selecionados.\n\n## 3. Componentes Chave\n\n*   **API Gateway**: Ponto de entrada unificado para todas as interações com o AaaS.\n*   **Serviço de Blueprints**: Gerenciamento de metadados, versões e conteúdo dos blueprints. Armazenamento em um repositório Git ou similar.\n*   **Serviço de Geração**: Motor de execução responsável por interpretar blueprints e gerar artefatos. Pode utilizar ferramentas como Jinja2, Terraform, ou scripts customizados.\n*   **Serviço de Storage/Repository**: Armazenamento dos artefatos gerados.\n*   **Banco de Dados**: Para persistir informações sobre jobs, usuários, histórico, etc.\n\n## 4. Arquitetura Lógica (MVP)\n\n```\n+----------------+       +-------------------+       +--------------------+\n|  UI/CLI (Client)| ----> |    API Gateway    | ----> |  Blueprint Service |\n+----------------+       +-------------------+       +--------------------+\n                              |                        |\n                              v                        v\n                        +--------------------+   +---------------------+\n                        | Generatíon Service |<->| Storage/Repository  |\n                        +--------------------+   +---------------------+\n                              |\n                              v\n                        +----------------+\n                        |   Database     |\n                        +----------------+\n```\n\n## 5. Próximos Passos\n\n*   Definição detalhada dos schemas para blueprints.\n*   Seleção das tecnologias para cada serviço.\n*   Implementação do fluxo básico de criação e execução de um blueprint simples."
+        }
+      ]
+    },
+    "artifacts": {
+      "meta": {
+        "id": "f17fda34",
+        "date": "2026-01-30",
+        "kind": "blueprint",
+        "slug": "blueprint-2026-01-30-f17fda34",
+        "title": "BLUEPRINT 2026-01-30 - f17fda34",
+        "diagramPath": "diagrams/blueprint-2026-01-30-f17fda34.drawio"
+      },
+      "nodes": [
+        {
+          "label": "Frontend (OnePage)"
+        },
+        {
+          "label": "Backend IA Seguro (API)"
+        },
+        {
+          "label": "Artefatos (docs/) + GitOps"
+        }
+      ],
+      "files": [
+        {
+          "path": "blueprints/blueprint-2026-01-30-f17fda34.md",
+          "content": "# BLUEPRINT 2026-01-30 - f17fda34\n\n## Contexto do Pedido\nTeste job is not defined\n\n## Preview Gerado\n[object Object]\n"
+        },
+        {
+          "path": "decisions/ADR-2026-01-30-f17fda34.md",
+          "content": "# ADR 2026-01-30-f17fda34: blueprint\n\n## Contexto\nTeste job is not defined\n\n## Decisão\nAdotar uma abordagem incremental orientada a eventos, com artefatos versionados.\n\n## Consequências\n- Padronização e rastreabilidade dos artefatos\n- Facilidade de rollback (quando GitOps entrar)\n- Evolução por módulos independentes\n"
+        },
+        {
+          "path": "diagrams/blueprint-2026-01-30-f17fda34.drawio",
+          "content": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<mxfile host=\"app.diagrams.net\">\n  <diagram name=\"BLUEPRINT 2026-01-30 - f17fda34\">\n    <mxGraphModel dx=\"1200\" dy=\"800\" grid=\"1\" gridSize=\"10\">\n      <root>\n        <mxCell id=\"0\"/><mxCell id=\"1\" parent=\"0\"/>\n\n        <mxCell id=\"2\" value=\"Frontend (OnePage)\" style=\"rounded=1;whiteSpace=wrap;html=1;\" vertex=\"1\" parent=\"1\">\n          <mxGeometry x=\"60\" y=\"140\" width=\"240\" height=\"90\" as=\"geometry\"/>\n        </mxCell>\n\n        <mxCell id=\"3\" value=\"Backend IA Seguro (API)\" style=\"rounded=1;whiteSpace=wrap;html=1;\" vertex=\"1\" parent=\"1\">\n          <mxGeometry x=\"360\" y=\"140\" width=\"280\" height=\"90\" as=\"geometry\"/>\n        </mxCell>\n\n        <mxCell id=\"4\" value=\"Artefatos (docs/) + GitOps\" style=\"rounded=1;whiteSpace=wrap;html=1;\" vertex=\"1\" parent=\"1\">\n          <mxGeometry x=\"720\" y=\"140\" width=\"280\" height=\"90\" as=\"geometry\"/>\n        </mxCell>\n\n        <mxCell id=\"5\" style=\"endArrow=block;html=1;\" edge=\"1\" parent=\"1\" source=\"2\" target=\"3\">\n          <mxGeometry relative=\"1\" as=\"geometry\"/>\n        </mxCell>\n\n        <mxCell id=\"6\" style=\"endArrow=block;html=1;\" edge=\"1\" parent=\"1\" source=\"3\" target=\"4\">\n          <mxGeometry relative=\"1\" as=\"geometry\"/>\n        </mxCell>\n\n      </root>\n    </mxGraphModel>\n  </diagram>\n</mxfile>"
+        }
+      ]
+    }
+  },
+  "result": {
+    "meta": {
+      "id": "f17fda34",
+      "date": "2026-01-30",
+      "kind": "blueprint",
+      "slug": "blueprint-2026-01-30-f17fda34",
+      "title": "BLUEPRINT 2026-01-30 - f17fda34",
+      "diagramPath": "diagrams/blueprint-2026-01-30-f17fda34.drawio"
+    }
+  },
+  "error": "job is not defined"
+}
