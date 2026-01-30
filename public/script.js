@@ -63,12 +63,25 @@ async function openArtifact(cfg, relPath) {
     const r = await fetch(`${cfg.apiBase}/api/file-link?${qs.toString()}`, {
       headers: headersAuth(cfg)
     });
+
     const data = await r.json().catch(() => ({}));
     if (!r.ok) {
       setStatus(`Falha ao gerar link: ${data.error || r.status}`, false);
       return;
     }
-    window.open(cfg.apiBase + data.url, "_blank", "noopener,noreferrer");
+
+    // URL assinada completa do arquivo no backend
+    const signedUrl = cfg.apiBase + data.url;
+
+    // Se for Draw.io, abre direto no diagrams.net
+    if ((relPath || "").toLowerCase().endsWith(".drawio")) {
+      const diagramsUrl = "https://app.diagrams.net/#U" + encodeURIComponent(signedUrl);
+      window.open(diagramsUrl, "_blank", "noopener,noreferrer");
+      return;
+    }
+
+    // Caso normal (md/json/etc.)
+    window.open(signedUrl, "_blank", "noopener,noreferrer");
   } catch (e) {
     setStatus(`Erro ao abrir: ${e.message}`, false);
   }
