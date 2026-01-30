@@ -142,16 +142,19 @@ app.post("/api/mvp1/preview", authWorkspace, async (req, res) => {
 });
 
 app.post("/api/mvp1/generate", authWorkspace, async (req, res) => {
-  const workspace = req.workspace; // vindo do middleware authWorkspace
-  const { kind, prompt } = req.body || {};
+  try {
+    const workspace = req.workspace;
+    const { kind, prompt } = req.body || {};
 
-  if (!workspace) return res.status(400).json({ error: "workspace_required" });
-  if (!ALLOWED_KINDS.has(kind)) return res.status(400).json({ error: "invalid_kind", allowed: [...ALLOWED_KINDS] });
-  if (!prompt || typeof prompt !== "string") return res.status(400).json({ error: "prompt_required" });
+    if (!workspace) return res.status(400).json({ error: "workspace_required" });
 
-  const job = createJob({ workspace, kind, prompt });
-  enqueueJob(job.id); // ou seu mecanismo atual
-  res.json({ jobId: job.id });
+    const ALLOWED = new Set(["blueprint","adr","drawio"]);
+    if (!ALLOWED.has(kind)) return res.status(400).json({ error: "invalid_kind", allowed: [...ALLOWED] });
+
+    const job = createJob({ workspace, kind, prompt });
+    enqueueJob(job.id);
+    res.json({ jobId: job.id });
+  } catch (e) { next(e); }
   
   // const { prompt, kind } = req.body || {};
   // if (!prompt) return res.status(400).json({ error: "prompt required" });
@@ -229,6 +232,14 @@ app.get("/api/public/file", (req, res) => {
 
   // express setará content-type por extensão via res.sendFile
   res.sendFile(full);
+});
+
+app.use((err, req, res, next) => {
+  console.error("API_ERROR:", err);
+  res.status(500).json({
+    error: "internal_error",
+    message: err.message
+  });
 });
 
 function pickNextStep(job) {
