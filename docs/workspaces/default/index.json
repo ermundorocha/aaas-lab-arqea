@@ -1,11 +1,4 @@
 {
   "workspace": "default",
-  "files": [
-    "blueprints/high-level-architecture.md",
-    "blueprints/service-mesh-api-management.md",
-    "blueprints/iam-architecture.md",
-    "blueprints/data-persistence-strategy.md",
-    "blueprints/observability-strategy.md",
-    "blueprints/deployment-operations-mvp.md"
-  ]
+  "files": []
 }
