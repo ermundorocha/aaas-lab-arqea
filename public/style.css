@@ -115,6 +115,8 @@ body{
   color: white;
 }
 
+.btn.danger { border-color: #b3261e33; }
+
 .hint{
   margin-top:10px;
   font-size:12px;

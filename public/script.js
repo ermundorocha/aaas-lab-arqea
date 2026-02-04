@@ -52,6 +52,52 @@ function badgeLabel(path) {
   return ext ? ext.toUpperCase() : "FILE";
 }
 
+async function clearCatalog(cfg) {
+  const ws = (cfg.workspace || "").trim();
+  if (!ws) {
+    setStatus("Informe o workspace antes de limpar.", false);
+    return;
+  }
+
+  const ok = confirm(
+    `ATENÇÃO: isso irá apagar os arquivos do workspace "${ws}" em docs/workspaces/${ws}/ e zerar o catálogo.\n\nContinuar?`
+  );
+  if (!ok) return;
+
+  try {
+    setStatus(`Limpando catálogo do workspace "${ws}"...`, true);
+
+    const r = await fetch(`${cfg.apiBase}/api/catalog/clear`, {
+      method: "POST",
+      headers: {
+        ...headersAuth(cfg),
+        "Content-Type": "application/json"
+      },
+      body: "{}"
+    });
+
+    const data = await r.json().catch(() => ({}));
+    if (!r.ok) {
+      setStatus(`Falha ao limpar: ${data.error || data.message || r.status}`, false);
+      return;
+    }
+
+    setStatus(`Workspace "${ws}" limpo com sucesso.`, true);
+
+    // Recarrega o catálogo se você já tem essa função no UI
+    if (typeof loadCatalog === "function") {
+      await loadCatalog(cfg);
+    }
+  } catch (e) {
+    setStatus(`Erro ao limpar: ${e.message}`, false);
+  }
+}
+
+document.getElementById("btnClearCatalog")?.addEventListener("click", async () => {
+  const cfg = getCfg(); // use a mesma função que você já usa para montar cfg (apiBase/token/workspace)
+  await clearCatalog(cfg);
+});
+
 //function docsLink(cfg, relPath) {
 //  // docs são servidos externamente (porta 3000). Aqui vamos gerar um link relativo para o servidor estático.
 //  // Se você preferir abrir via backend, podemos trocar isso depois.
