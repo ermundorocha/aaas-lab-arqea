@@ -1,4 +1,6 @@
 {
   "workspace": "default",
-  "files": []
+  "files": [
+    "blueprints/aaS-mvp-architecture.md"
+  ]
 }
