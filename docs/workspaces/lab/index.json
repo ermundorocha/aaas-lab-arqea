@@ -1,6 +1,7 @@
 {
   "workspace": "lab",
   "files": [
-    "blueprints/api-design-security.md"
+    "blueprints/api-design-security.md",
+    "blueprints/aaS-mvp-overview.md"
   ]
 }
