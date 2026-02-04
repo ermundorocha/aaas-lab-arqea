@@ -23,6 +23,11 @@ import { writeFilesToDocs, updateCatalog } from "./store.js";
 import { generatePreview } from "./ai.js";
 
 import { makeSignedUrl, verifySignedUrl } from "./fileLinks.js";
+import { clearWorkspaceDocs } from "./clean.js";
+import { gitCommitDocs } from "./gitops.js"; // se já existe no seu projeto
+
+const asyncRoute = (fn) => (req, res, next) =>
+  Promise.resolve(fn(req, res, next)).catch(next);
 
 const app = express();
 
@@ -264,6 +269,21 @@ app.use((err, req, res, next) => {
     message: err.message
   });
 });
+
+// --- limpar docs e workspaces ---
+app.post("/api/catalog/clear", authWorkspace, asyncRoute(async (req, res) => {
+  const ws = req.workspace;
+
+  const out = await clearWorkspaceDocs(ws);
+
+  // opcional: commit local (se ENABLE_GITOPS=true)
+  let gitops = { enabled: process.env.ENABLE_GITOPS === "true" };
+  if (process.env.ENABLE_GITOPS === "true") {
+    gitops = await gitCommitDocs({ message: `AaaS: clear catalog workspace=${ws}` });
+  }
+
+  res.json({ ...out, gitops });
+}));
 
 function pickNextStep(job) {
   // 1) preview
