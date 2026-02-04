@@ -1,4 +1,6 @@
 {
   "workspace": "lab",
-  "files": []
+  "files": [
+    "blueprints/api-design-security.md"
+  ]
 }
