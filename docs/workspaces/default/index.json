@@ -8,6 +8,10 @@
     "diagrams/adr-2026-01-29-3dd0a908.drawio",
     "blueprints/blueprint-2026-01-29-bda94d22.md",
     "decisions/ADR-2026-01-29-bda94d22.md",
-    "diagrams/blueprint-2026-01-29-bda94d22.drawio"
+    "diagrams/blueprint-2026-01-29-bda94d22.drawio",
+    "blueprints/01-visao-arquitetura-geral.md",
+    "blueprints/02-estrategia-servicos-api.md",
+    "blueprints/03-seguranca-por-design.md",
+    "blueprints/04-plataforma-cloud-native.md"
   ]
 }
