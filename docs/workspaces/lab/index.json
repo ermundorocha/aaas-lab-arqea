@@ -1,9 +1,4 @@
 {
-  "files": [
-    "blueprints/blueprint-2026-01-28-6f9311cd.md",
-    "decisions/ADR-2026-01-28-6f9311cd.md",
-    "diagrams/blueprint-2026-01-28-6f9311cd.drawio",
-    "blueprints/001-aas-mvp-overview.md",
-    "adrs/adr-001-monolith-to-microservices.md"
-  ]
+  "workspace": "lab",
+  "files": []
 }
