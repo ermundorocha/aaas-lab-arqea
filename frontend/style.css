@@ -98,6 +98,10 @@ body{
 .field textarea{ resize:vertical; }
 .span2{ grid-column:1 / span 2; }
 
+*:has(> #prompt){
+  grid-column: 1 / -1;
+}
+
 .btn{
   border:1px solid var(--line);
   background: transparent;
