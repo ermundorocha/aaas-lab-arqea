@@ -6,9 +6,9 @@ const els = {
   status: document.getElementById("status"),
   list: document.getElementById("list"),
   count: document.getElementById("count"),
-
   prompt: document.getElementById("prompt"),
-  kind: document.getElementById("kind"),
+  kind: document.getElementById("selKindArtifact"),
+  aiKind: document.getElementById("selKindAI"),
   btnGenerate: document.getElementById("btnGenerate"),
   jobId: document.getElementById("jobId"),
   jobStatus: document.getElementById("jobStatus"),
@@ -222,9 +222,11 @@ async function generateJob() {
   if (!cfg.apiBase) return setStatus("Informe o Backend URL.", false);
   if (!cfg.token) return setStatus("Informe o token do workspace.", false);
 
-  const prompt = (els.prompt.value || "").trim();
-  const kind = els.kind.value;
+  const prompt = (els.prompt?.value || "").trim();
+  const kind = (els.kind?.value || "").trim();
+  const kindai = (els.aiKind?.value || "").trim().toLowerCase();
 
+  if (!kind) return setStatus("Selecione o Kind – Artefato.", false);
   if (!prompt) return setStatus("Informe um prompt para gerar.", false);
 
   setStatus("Disparando job...");
@@ -235,12 +237,12 @@ async function generateJob() {
         ...headersAuth(cfg),
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ kind, prompt }),
+      body: JSON.stringify({ kind, kindai, prompt }),
     });
 
     const data = await r.json().catch(() => ({}));
     if (!r.ok) {
-      setStatus(`Falha ao disparar job: ${data.error || r.status}`, false);
+      setStatus(`Falha ao disparar job: ${data.error || data.message || r.status}`, false);
       return;
     }
 

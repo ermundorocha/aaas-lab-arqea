@@ -12,11 +12,13 @@ export function createJob({ workspace, kind, prompt, createdBy = "anonymous" }) 
     id: crypto.randomUUID().slice(0, 12),
     workspace,
     createdBy,
-    kind,
+    kind,     // Kind - Artefato
+    kindai:   // Kind – IA
     prompt,
     status: "QUEUED",
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
+    result: { meta: {} },
     steps: [],
     ctx: {}
   };

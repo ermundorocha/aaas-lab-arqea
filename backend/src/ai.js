@@ -26,11 +26,13 @@ function buildProvider(name) {
  * Mantém a mesma assinatura/uso atual.
  */
 export async function generatePreview(job) {
-  const providerName = resolveProviderName();
-  const provider = buildProvider(providerName);
+  const forcedMock = (process.env.MOCK_AI || "").toLowerCase() === "true";
 
-  // padrão de log simples (você pode jogar isso nos steps depois)
-  // console.log(`[AI] provider=${provider.name} job=${job.id}`);
+  // prioridade: job.ai → depois env → fallback
+  const name =
+    forcedMock ? "mock" :
+    (job.ai || process.env.AI_PROVIDER || "mock").toLowerCase();
 
+  const provider = buildProvider(name);
   return provider.generatePreview({ job });
 }

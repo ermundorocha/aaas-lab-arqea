@@ -8,7 +8,8 @@ const els = {
   count: document.getElementById("count"),
 
   prompt: document.getElementById("prompt"),
-  kind: document.getElementById("kind"),
+  kind: document.getElementById("kind") || document.getElementById("selKindArtifact"),
+  aiKind: document.getElementById("selKindAI"),
   btnGenerate: document.getElementById("btnGenerate"),
   jobId: document.getElementById("jobId"),
   jobStatus: document.getElementById("jobStatus"),
@@ -222,8 +223,14 @@ async function generateJob() {
   if (!cfg.apiBase) return setStatus("Informe o Backend URL.", false);
   if (!cfg.token) return setStatus("Informe o token do workspace.", false);
 
-  const prompt = (els.prompt.value || "").trim();
-  const kind = els.kind.value;
+  const prompt = (els.prompt?.value || "").trim();
+
+  const kindEl = els.kind || document.getElementById("kind") || document.getElementById("selKindArtifact");
+  if (!kindEl) return setStatus("Campo 'Kind – Artefato' não encontrado (id esperado: kind ou selKindArtifact).", false);
+  const kind = kindEl.value;
+
+  const aiEl = els.aiKind || document.getElementById("selKindAI");
+  const ai = (aiEl?.value || "gemini").toLowerCase();
 
   if (!prompt) return setStatus("Informe um prompt para gerar.", false);
 
@@ -235,12 +242,12 @@ async function generateJob() {
         ...headersAuth(cfg),
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ kind, prompt }),
+      body: JSON.stringify({ kind, ai, prompt }),
     });
 
     const data = await r.json().catch(() => ({}));
     if (!r.ok) {
-      setStatus(`Falha ao disparar job: ${data.error || r.status}`, false);
+      setStatus(`Falha ao disparar job: ${data.error || data.message || r.status}`, false);
       return;
     }
 
@@ -252,6 +259,50 @@ async function generateJob() {
     setStatus(`Erro de rede: ${e.message}`, false);
   }
 }
+
+// async function generateJob() {
+//   const cfg = getCfg();
+//   if (!cfg.apiBase) return setStatus("Informe o Backend URL.", false);
+//   if (!cfg.token) return setStatus("Informe o token do workspace.", false);
+
+//   const prompt = (els.prompt.value || "").trim();
+
+//   // Kind – Artefato (mantém o que já existe)
+//   const kind = els.kind.value;
+
+//   // Kind – IA (novo). Suporta tanto els.aiKind quanto um select direto por id.
+//   const ai =
+//     (els.aiKind && els.aiKind.value) ||
+//     document.getElementById("selKindAI")?.value ||
+//     "gemini";
+
+//   if (!prompt) return setStatus("Informe um prompt para gerar.", false);
+
+//   setStatus("Disparando job...");
+//   try {
+//     const r = await fetch(`${cfg.apiBase}/api/mvp1/generate`, {
+//       method: "POST",
+//       headers: {
+//         ...headersAuth(cfg),
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify({ kind, ai, prompt }),
+//     });
+
+//     const data = await r.json().catch(() => ({}));
+//     if (!r.ok) {
+//       setStatus(`Falha ao disparar job: ${data.error || data.message || r.status}`, false);
+//       return;
+//     }
+
+//     lastJobId = data.jobId;
+//     els.jobId.textContent = lastJobId;
+//     els.jobStatus.textContent = "QUEUED";
+//     setStatus(`Job criado: ${lastJobId}. Clique em "Acompanhar" para ver o progresso.`);
+//   } catch (e) {
+//     setStatus(`Erro de rede: ${e.message}`, false);
+//   }
+// }
 
 async function pollJobOnce() {
   const cfg = getCfg();

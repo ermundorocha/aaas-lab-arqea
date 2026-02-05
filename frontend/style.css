@@ -129,6 +129,8 @@ body{
   background: color-mix(in srgb, var(--bg) 88%, var(--accent) 12%);
 }
 
+.muted { opacity: .75; font-size: 0.95em; }
+
 .status{
   margin-top:10px;
   font-size:12px;

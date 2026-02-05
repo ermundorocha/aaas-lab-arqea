@@ -50,7 +50,18 @@
       </div>
 
       <div class="hint">
-        Dica: use <code>x-aaas-workspace</code> + <code>x-aaas-token</code>. Ex.: workspace <b>arqea</b>, token <b>arqea-456</b>.
+        <p><b>Dica rápida (Lab):</b> autenticação via headers <code>x-aaas-workspace</code> + <code>x-aaas-token</code>.</p>
+
+        <p><b>Backend URL</b>: substitua pela URL do túnel (HTTPS) disponibilizada pela equipe técnica.</p>
+
+        <p><b>Workspaces habilitados:</b></p>
+        <ul>
+          <li><code>default</code> — token <code>ermundo-aaas-123</code></li>
+          <li><code>arqea</code> — token <code>arqea-456</code></li>
+          <li><code>lab</code> — token <code>lab-789</code></li>
+        </ul>
+
+        <p class="muted">Observação: tokens são de laboratório.</p>
       </div>
 
       <div id="status" class="status"></div>
@@ -65,11 +76,21 @@
         </label>
 
         <label class="field">
-          <span>Kind</span>
-          <select id="kind">
-            <option value="blueprint">blueprint</option>
-            <option value="adr">adr</option>
-            <option value="drawio">drawio</option>
+          <span>Kind – Artefato</span>
+          <select id="selKindArtifact">
+            <option value="blueprint">blueprint (.md)</option>
+            <option value="adr">adr (.md)</option>
+            <option value="drawio">drawio (.drawio / xml)</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span>Kind – IA</span>
+          <select id="selKindAI">
+            <option value="gemini">Gemini</option>
+            <option value="chatgpt" disabled>ChatGPT (em breve)</option>
+            <option value="claude" disabled>Claude (em breve)</option>
+            <option value="mock">Mock (teste)</option>
           </select>
         </label>
 

@@ -11,7 +11,8 @@ export function registerPipeline() {
 
   on("JOB_START", async ({ jobId }) => {
     const job = readJob(jobId);
-    addStep(jobId, { level: "info", event: "AUDIT", msg: `workspace=${job.workspace} createdBy=${job.createdBy}` });
+  
+    addStep(jobId, { level:"info", event:"AUDIT", msg:`workspace=${job.workspace} createdBy=${job.createdBy} ai=${job.ai}` });
 
     setStatus(jobId, "RUNNING");
     addStep(jobId, { level: "info", event: "JOB_START", msg: "job running" });

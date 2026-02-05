@@ -40,7 +40,6 @@ app.use(cors({ origin: true }));
 // --- Config ---
 const PORT = process.env.PORT || 8080;
 const BASIC_TOKEN = process.env.BASIC_TOKEN || "change-me";
-const ALLOWED_KINDS = new Set(["blueprint", "adr", "drawio"]);
 
 // --- Auth simples (por header) ---
 function auth(req, res, next) {
@@ -147,65 +146,52 @@ app.post("/api/mvp1/preview", authWorkspace, async (req, res) => {
 });
 
 app.post("/api/mvp1/generate", authWorkspace, async (req, res, next) => {
-    try {
-      const workspace = req.workspace;
-      const { kind, prompt } = req.body || {};
+  try {
+    const workspace = req.workspace;
+    const { kind, kindai, prompt } = req.body || {};
 
-      if (!workspace) return res.status(400).json({ error: "workspace_required" });
+    if (!workspace) return res.status(400).json({ error: "workspace_required" });
 
-      const ALLOWED = new Set(["blueprint","adr","drawio"]);
-      if (!ALLOWED.has(kind)) return res.status(400).json({ error: "invalid_kind", allowed: [...ALLOWED] });
-
-      const createdBy =
-            req.headers["x-aaas-user"] ||
-            req.headers["x-forwarded-user"] ||
-            "mvp-user";
-
-      const job = createJob({ workspace, kind, prompt, createdBy });
-      
-      // dispara assíncrono
-      try {
-        emit("JOB_START", { jobId: job.id });
-        addStep(job.id, { level: "info", event: "ENQUEUED", msg: "job queued" });
-      } catch (e) {
-        setError(job.id, String(e?.message || e));
-      }
-
-      // resposta imediata (não bloqueia)
-      res.status(202).json({
-        ok: true,
-        jobId: job.id,
-        statusUrl: `/api/jobs/${job.id}`
-      });
-
-      //enqueueJob(job.id);
-      //res.json({ jobId: job.id });
-    } catch (e) {
-      next(e); 
+    const ALLOWED = new Set(["blueprint", "adr", "drawio"]);
+    if (!ALLOWED.has(kind)) {
+      return res.status(400).json({ error: "invalid_kind", allowed: [...ALLOWED] });
     }
-  
-  // const { prompt, kind } = req.body || {};
-  // if (!prompt) return res.status(400).json({ error: "prompt required" });
 
-  // const job = createJob({ kind: kind || "blueprint", 
-  //                         prompt,
-  //                         workspace: req.workspace || "default",
-  //                         createdBy: req.workspace || "default" });
+    const ALLOWED_AI = new Set(["gemini", "mock", "chatgpt", "claude"]);
+    const ENABLED_AI = new Set(["gemini", "mock"]); // por enquanto
+    const aiSel = (kindai || "gemini").toLowerCase();
 
-  // // dispara assíncrono
-  // try {
-  //   emit("JOB_START", { jobId: job.id });
-  //   addStep(job.id, { level: "info", event: "ENQUEUED", msg: "job queued" });
-  // } catch (e) {
-  //   setError(job.id, String(e?.message || e));
-  // }
+    if (!ALLOWED_AI.has(aiSel)) {
+      return res.status(400).json({ error: "invalid_ai", allowed: [...ALLOWED_AI] });
+    }
+    if (!ENABLED_AI.has(aiSel)) {
+      return res.status(400).json({ error: "ai_not_enabled_yet", enabled: [...ENABLED_AI] });
+    }
 
-  // // resposta imediata (não bloqueia)
-  // res.status(202).json({
-  //   ok: true,
-  //   jobId: job.id,
-  //   statusUrl: `/api/jobs/${job.id}`
-  // });
+    const createdBy =
+      req.headers["x-aaas-user"] ||
+      req.headers["x-forwarded-user"] ||
+      "mvp-user";
+
+    const job = createJob({ workspace, kind, ai: aiSel, prompt, createdBy });
+
+    // dispara assíncrono
+    try {
+      emit("JOB_START", { jobId: job.id });
+      addStep(job.id, { level: "info", event: "ENQUEUED", msg: "job queued" });
+    } catch (e) {
+      setError(job.id, String(e?.message || e));
+    }
+
+    // resposta imediata (não bloqueia)
+    res.status(202).json({
+      ok: true,
+      jobId: job.id,
+      statusUrl: `/api/jobs/${job.id}`
+    });
+  } catch (e) {
+    next(e);
+  }
 });
 
 // --- Catálogo (lê docs/index.json) ---
