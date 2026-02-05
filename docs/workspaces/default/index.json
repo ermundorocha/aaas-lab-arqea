@@ -5,6 +5,7 @@
     "blueprints/02-design-api-core-aaS.md",
     "blueprints/03-componentes-chave-detalhe.md",
     "adrs/adr-001-sugestoes-tecnologias-api-aaas-mvp.md",
-    "blueprints/api-tech-suggestions.md"
+    "blueprints/api-tech-suggestions.md",
+    "blueprints/o-que-e-um-arquiteto-enterprise.md"
   ]
 }
