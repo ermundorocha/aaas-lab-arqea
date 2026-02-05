@@ -6,6 +6,7 @@
     "blueprints/01-aaas-mvp-visao-geral.md",
     "blueprints/02-aaas-mvp-componentes-chave.md",
     "blueprints/03-aaas-mvp-modelo-dados-simplificado.md",
-    "blueprints/api-tech-suggestions-mvp.md"
+    "blueprints/api-tech-suggestions-mvp.md",
+    "adrs/0001_sugestoes_tecnologias_api_mvp.md"
   ]
 }
