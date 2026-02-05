@@ -1,4 +1,6 @@
 {
   "workspace": "arqea",
-  "files": []
+  "files": [
+    "adrs/sugestoes-tecnologias-api-mvp.md"
+  ]
 }
