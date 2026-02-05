@@ -1,3 +1,0 @@
-## AaaS MVP: Visão Geral e Escopo
-
-Este documento define a visão geral e o escopo do Minimum Viable Product (MVP) para a plataforma Architecture as a Service (AaaS). O objetivo principal é fornecer um conjunto básico de funcionalidades para gerenciar e disponibilizar blueprints arquiteturais de forma centralizada. O MVP focará na capacidade de upload, versionamento e consumo de blueprints, com uma interface de usuário simplificada para acesso. Não incluirá, nesta fase, capacidades avançadas de automação de deployment ou integração profunda com ferramentas de IaC, focando na **gestão de conhecimento arquitetural**.
