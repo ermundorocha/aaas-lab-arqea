@@ -1,0 +1,125 @@
+{
+  "id": "f8e1b461-2b0",
+  "workspace": "default",
+  "createdBy": "mvp-user",
+  "kind": "blueprint",
+  "kindai": "mock",
+  "prompt": "Descreva simples sobre arquitetura de soluções",
+  "status": "DONE",
+  "createdAt": "2026-02-05T21:58:26.673Z",
+  "updatedAt": "2026-02-05T21:58:39.700Z",
+  "result": {
+    "meta": {
+      "title": "Plano de Arquitetura para AaaS (MVP)",
+      "kind": "blueprint"
+    },
+    "written": [
+      "blueprints/aas-mvp-architecture.md"
+    ],
+    "gitops": {
+      "committed": true,
+      "lastCommit": {
+        "hash": "b3edbcf996e224d58b4f5707842f42c94a5c64b8",
+        "date": "2026-02-05T18:58:39-03:00",
+        "message": "AaaS: update docs",
+        "refs": "HEAD -> main",
+        "body": "",
+        "author_name": "Ermundo Rocha",
+        "author_email": "ermundo.rocha@gmail.com"
+      }
+    }
+  },
+  "steps": [
+    {
+      "ts": "2026-02-05T21:58:26.674Z",
+      "level": "info",
+      "event": "ENQUEUED",
+      "msg": "job queued"
+    },
+    {
+      "ts": "2026-02-05T21:58:26.678Z",
+      "level": "info",
+      "event": "JOB_START",
+      "msg": "event received"
+    },
+    {
+      "ts": "2026-02-05T21:58:26.682Z",
+      "level": "info",
+      "event": "AUDIT",
+      "msg": "workspace=default createdBy=mvp-user ai=undefined"
+    },
+    {
+      "ts": "2026-02-05T21:58:26.686Z",
+      "level": "info",
+      "event": "JOB_START",
+      "msg": "job running"
+    },
+    {
+      "ts": "2026-02-05T21:58:26.688Z",
+      "level": "info",
+      "event": "STEP_PREVIEW",
+      "msg": "event received"
+    },
+    {
+      "ts": "2026-02-05T21:58:26.689Z",
+      "level": "info",
+      "event": "STEP_PREVIEW",
+      "msg": "generating preview"
+    },
+    {
+      "ts": "2026-02-05T21:58:38.136Z",
+      "level": "info",
+      "event": "STEP_BUILD_ARTIFACTS",
+      "msg": "event received"
+    },
+    {
+      "ts": "2026-02-05T21:58:38.139Z",
+      "level": "info",
+      "event": "STEP_BUILD_ARTIFACTS",
+      "msg": "validating preview artifacts"
+    },
+    {
+      "ts": "2026-02-05T21:58:38.143Z",
+      "level": "info",
+      "event": "STEP_WRITE_FILES",
+      "msg": "event received"
+    },
+    {
+      "ts": "2026-02-05T21:58:38.146Z",
+      "level": "info",
+      "event": "STEP_WRITE_FILES",
+      "msg": "writing docs files + catalog"
+    },
+    {
+      "ts": "2026-02-05T21:58:38.155Z",
+      "level": "info",
+      "event": "STEP_GITOPS",
+      "msg": "event received"
+    },
+    {
+      "ts": "2026-02-05T21:58:38.157Z",
+      "level": "info",
+      "event": "STEP_GITOPS",
+      "msg": "committing docs"
+    },
+    {
+      "ts": "2026-02-05T21:58:39.700Z",
+      "level": "info",
+      "event": "DONE",
+      "msg": "job completed"
+    }
+  ],
+  "ctx": {
+    "preview": {
+      "title": "Plano de Arquitetura para AaaS (MVP)",
+      "summary": "Este plano descreve a arquitetura de solução para a primeira versão (MVP) do Architecture as a Service (AaaS), focando nos componentes essenciais para a geração e entrega de artefatos arquitetônicos básicos, validando a proposta de valor com funcionalidade mínima viável.",
+      "artifacts": [
+        {
+          "path": "blueprints/aas-mvp-architecture.md",
+          "contentType": "text/markdown",
+          "content": "{\"id\":\"f8e1b461-2b0\",\"workspace\":\"default\",\"createdBy\":\"mvp-user\",\"kind\":\"blueprint\",\"kindai\":\"mock\",\"prompt\":\"Descreva simples sobre arquitetura de soluções\",\"status\":\"RUNNING\",\"createdAt\":\"2026-02-05T21:58:26.673Z\",\"updatedAt\":\"2026-02-05T21:58:26.688Z\"}\n================================================================================\n# Arquitetura de Solução AaaS (MVP)\n\n## 1. Visão Geral\nA arquitetura de solução para o MVP do AaaS (Architecture as a Service) foca na entrega de um serviço básico para geração e gestão de artefatos arquitetônicos. O objetivo principal é validar a proposta de valor, permitindo que usuários solicitem e recebam descrições arquitetônicas simples.\n\n## 2. Componentes Principais\n\n### 2.1. API Gateway / Interface do Usuário\n-   **Função**: Ponto de entrada para todas as interações do usuário. Pode ser uma API RESTful ou uma interface web simples.\n-   **Responsabilidades**:\n    -   Autenticação e Autorização básica.\n    -   Recebimento de requisições para geração de artefatos.\n    -   Exposição de artefatos gerados.\n\n### 2.2. Serviço de Geração de Arquitetura\n-   **Função**: O \"cérebro\" do AaaS, responsável por interpretar as requisições e gerar o conteúdo dos artefatos.\n-   **Responsabilidades**:\n    -   Processar parâmetros de entrada (ex: tipo de arquitetura, domínio).\n    -   Gerar conteúdo em formatos específicos (ex: Markdown para blueprints).\n    -   Integração com modelos de template ou \"motores\" de geração.\n\n### 2.3. Serviço de Armazenamento de Artefatos\n-   **Função**: Persistir os artefatos gerados de forma segura e acessível.\n-   **Responsabilidades**:\n    -   Armazenar arquivos de artefato (ex: `.md`, `.json`).\n    -   Gerenciar metadados dos artefatos (ex: autor, data de criação, versão).\n    -   Prover acesso para download ou visualização.\n\n## 3. Fluxo de Dados (Exemplo)\n\n1.  Usuário acessa o API Gateway e solicita a geração de um \"Plano de Arquitetura Simples\".\n2.  API Gateway autentica o usuário e encaminha a requisição para o Serviço de Geração de Arquitetura.\n3.  Serviço de Geração de Arquitetura processa a requisição, utiliza templates internos e gera um arquivo Markdown.\n4.  O arquivo Markdown é enviado para o Serviço de Armazenamento de Artefatos, que o salva e retorna uma URL ou ID.\n5.  O API Gateway retorna ao usuário o status da geração e o link para o artefato.\n6.  Usuário pode então acessar o artefato diretamente do Serviço de Armazenamento, via API Gateway.\n\n## 4. Considerações Futuras (MVP Pós-lançamento)\n-   **Escalabilidade**: Adicionar capacidade de processar múltiplas requisições simultaneamente.\n-   **Customização**: Permitir que usuários forneçam templates ou regras para geração.\n-   **Integrações**: Conectar-se com ferramentas de diagramação (ex: draw.io) ou repositórios de código.\n-   **Monitoramento e Logs**: Implementar observabilidade para rastrear o uso e performance.\n"
+        }
+      ]
+    }
+  }
+}

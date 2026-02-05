@@ -28,7 +28,10 @@ export function registerPipeline() {
     //const preview = await generatePreview({ prompt: job.prompt, kind: job.kind });
     const preview = await generatePreview(job);
 
-    setCtx(jobId, { preview });
+    // ✅ injeta o header + linha pontilhada nos artifacts[].content
+    const previewWithMeta = injectMetaIntoPreview(job, preview);
+   
+    setCtx(jobId, { preview: previewWithMeta });
     emit("STEP_BUILD_ARTIFACTS", { jobId });
   });
 
@@ -180,4 +183,70 @@ function normalizeArtifacts(job, preview) {
     .filter(a => a.path.startsWith(allowed.dir))
     .filter(a => allowed.exts.some(ext => a.path.toLowerCase().endsWith(ext)))
     .filter(a => allowed.contentTypes.includes(a.contentType));
+}
+
+// --- tudo abaixo é o que consta no arquivo a ser gerado ----
+const SEP_LINE = "================================================================================";
+
+function buildMetaHeader(job) {
+  const obj = {
+    id: job?.id || "",
+    workspace: job?.workspace || "",
+    createdBy: job?.createdBy || "",
+    kind: job?.kind || "",
+    kindai: job?.kindai || job?.ai ||"",
+    prompt: job?.prompt || "",
+    status: job?.status || "",
+    createdAt: job?.createdAt || "",
+    updatedAt: job?.updatedAt || ""
+  };
+  return JSON.stringify(obj);
+}
+
+function prependMeta(content, metaLine, contentType) {
+  const c = String(content || "");
+
+  // drawio/xml: mantém XML válido usando comentário
+  if (contentType === "application/xml") {
+    const xmlDeclMatch = c.match(/^\s*<\?xml[^>]*\?>/i);
+    if (xmlDeclMatch) {
+      const decl = xmlDeclMatch[0];
+      const rest = c.slice(xmlDeclMatch[0].length);
+      return `${decl}\n<!-- ${metaLine} -->\n<!-- ${SEP_LINE} -->\n${rest.trimStart()}`;
+    }
+    return `<!-- ${metaLine} -->\n<!-- ${SEP_LINE} -->\n${c}`;
+  }
+
+  // markdown/json/text: primeiras linhas "puras" como solicitado
+  return `${metaLine}\n${SEP_LINE}\n${c}`;
+}
+
+function injectMetaIntoPreview(job, preview) {
+  if (!preview || typeof preview !== "object") return preview;
+
+  const metaLine = buildMetaHeader(job);
+  const arts = Array.isArray(preview.artifacts) ? preview.artifacts : [];
+
+  // clona leve (não muta objeto original por referência)
+  const cloned = { ...preview, artifacts: arts.map(a => ({ ...a })) };
+
+  for (const a of cloned.artifacts) {
+    if (!a || typeof a.content !== "string") continue;
+
+    // se contentType não vier, tenta inferir pelo path (MVP)
+    const ct =
+      a.contentType ||
+      (String(a.path || "").toLowerCase().endsWith(".drawio") ? "application/xml" : "text/markdown");
+
+    a.contentType = ct;
+
+    // evita duplicar em retries: se já começa com o JSON, não reaplica
+    const trimmed = a.content.trimStart();
+    if (trimmed.startsWith(metaLine)) continue;
+    if (ct === "application/xml" && trimmed.startsWith("<!-- " + metaLine)) continue;
+
+    a.content = prependMeta(a.content, metaLine, ct);
+  }
+
+  return cloned;
 }

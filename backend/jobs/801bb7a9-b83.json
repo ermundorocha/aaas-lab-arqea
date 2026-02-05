@@ -1,0 +1,125 @@
+{
+  "id": "801bb7a9-b83",
+  "workspace": "default",
+  "createdBy": "mvp-user",
+  "kind": "blueprint",
+  "kindai": "gemini",
+  "prompt": "Um texto explicativo o que é um Enterprise Architect em português brasil em um único arquivo.",
+  "status": "DONE",
+  "createdAt": "2026-02-05T21:02:00.418Z",
+  "updatedAt": "2026-02-05T21:02:18.343Z",
+  "result": {
+    "meta": {
+      "title": "Plano de Artefatos para AaaS (MVP)",
+      "kind": "blueprint"
+    },
+    "written": [
+      "blueprints/o-que-e-enterprise-architect.md"
+    ],
+    "gitops": {
+      "committed": true,
+      "lastCommit": {
+        "hash": "a288e2f5e0adb3166b5b5d7f885643925bee494e",
+        "date": "2026-02-05T18:02:17-03:00",
+        "message": "AaaS: update docs",
+        "refs": "HEAD -> main",
+        "body": "",
+        "author_name": "Ermundo Rocha",
+        "author_email": "ermundo.rocha@gmail.com"
+      }
+    }
+  },
+  "steps": [
+    {
+      "ts": "2026-02-05T21:02:00.420Z",
+      "level": "info",
+      "event": "ENQUEUED",
+      "msg": "job queued"
+    },
+    {
+      "ts": "2026-02-05T21:02:00.422Z",
+      "level": "info",
+      "event": "JOB_START",
+      "msg": "event received"
+    },
+    {
+      "ts": "2026-02-05T21:02:00.425Z",
+      "level": "info",
+      "event": "AUDIT",
+      "msg": "workspace=default createdBy=mvp-user ai=undefined"
+    },
+    {
+      "ts": "2026-02-05T21:02:00.428Z",
+      "level": "info",
+      "event": "JOB_START",
+      "msg": "job running"
+    },
+    {
+      "ts": "2026-02-05T21:02:00.430Z",
+      "level": "info",
+      "event": "STEP_PREVIEW",
+      "msg": "event received"
+    },
+    {
+      "ts": "2026-02-05T21:02:00.432Z",
+      "level": "info",
+      "event": "STEP_PREVIEW",
+      "msg": "generating preview"
+    },
+    {
+      "ts": "2026-02-05T21:02:16.437Z",
+      "level": "info",
+      "event": "STEP_BUILD_ARTIFACTS",
+      "msg": "event received"
+    },
+    {
+      "ts": "2026-02-05T21:02:16.439Z",
+      "level": "info",
+      "event": "STEP_BUILD_ARTIFACTS",
+      "msg": "validating preview artifacts"
+    },
+    {
+      "ts": "2026-02-05T21:02:16.442Z",
+      "level": "info",
+      "event": "STEP_WRITE_FILES",
+      "msg": "event received"
+    },
+    {
+      "ts": "2026-02-05T21:02:16.443Z",
+      "level": "info",
+      "event": "STEP_WRITE_FILES",
+      "msg": "writing docs files + catalog"
+    },
+    {
+      "ts": "2026-02-05T21:02:16.448Z",
+      "level": "info",
+      "event": "STEP_GITOPS",
+      "msg": "event received"
+    },
+    {
+      "ts": "2026-02-05T21:02:16.450Z",
+      "level": "info",
+      "event": "STEP_GITOPS",
+      "msg": "committing docs"
+    },
+    {
+      "ts": "2026-02-05T21:02:18.343Z",
+      "level": "info",
+      "event": "DONE",
+      "msg": "job completed"
+    }
+  ],
+  "ctx": {
+    "preview": {
+      "title": "Plano de Artefatos para AaaS (MVP)",
+      "summary": "Plano inicial de artefatos para o AaaS (Architecture as a Service) MVP, focado na definição e papel de um Enterprise Architect.",
+      "artifacts": [
+        {
+          "path": "blueprints/o-que-e-enterprise-architect.md",
+          "contentType": "text/markdown",
+          "content": "{\"id\":\"801bb7a9-b83\",\"workspace\":\"default\",\"createdBy\":\"mvp-user\",\"kind\":\"blueprint\",\"kindai\":\"gemini\",\"prompt\":\"Um texto explicativo o que é um Enterprise Architect em português brasil em um único arquivo.\",\"status\":\"RUNNING\",\"createdAt\":\"2026-02-05T21:02:00.418Z\",\"updatedAt\":\"2026-02-05T21:02:00.430Z\"}\n================================================================================\nUm Enterprise Architect (Arquiteto Empresarial) alinha a estratégia de TI com os objetivos de negócio, atuando como ponte entre as necessidades empresariais e as capacidades tecnológicas. Suas responsabilidades incluem definir a visão arquitetônica, assegurar o alinhamento Negócio-TI, estabelecer padrões de governança, otimizar processos, promover inovação, apoiar a tomada de decisão estratégica e comunicar informações complexas. Requer conhecimento técnico e de negócio, liderança, pensamento analítico e comunicação eficaz para garantir a evolução coerente e sustentável da arquitetura corporativa."
+        }
+      ]
+    }
+  }
+}

@@ -1,21 +1,21 @@
-import { buildMockProvider } from "./ai/providers/mock.js";
+//import { buildMockProvider } from "./ai/providers/mock.js";
 import { buildGeminiProvider } from "./ai/providers/gemini.js";
+import { buildClaudeProvider } from "./ai/providers/claude.js";
 
-// no futuro:
-// import { buildOpenAIProvider } from "./ai/providers/openai.js";
-// import { buildAzureOpenAIProvider } from "./ai/providers/azureOpenAI.js";
+// function resolveProviderName() {
+//   // Compatibilidade: se MOCK_AI=true, força mock
+//   if ((process.env.MOCK_AI || "").toLowerCase() === "true") return "mock";
 
-function resolveProviderName() {
-  // Compatibilidade: se MOCK_AI=true, força mock
-  if ((process.env.MOCK_AI || "").toLowerCase() === "true") return "mock";
-
-  // Novo padrão: escolher provider
-  return (process.env.AI_PROVIDER || "mock").toLowerCase();
-}
+//   // Novo padrão: escolher provider
+//   return (process.env.AI_PROVIDER || "mock").toLowerCase();
+// }
 
 function buildProvider(name) {
-  if (name === "gemini") return buildGeminiProvider();
-  if (name === "mock") return buildMockProvider();
+  const n = String(name || "").toLowerCase();
+
+  if (n === "gemini") return buildGeminiProvider();
+  if (n === "claude") return buildClaudeProvider();
+  if (n === "mock") return buildMockProvider();
 
   // fallback seguro
   return buildMockProvider();

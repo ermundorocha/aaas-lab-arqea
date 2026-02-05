@@ -7,13 +7,13 @@ const JOBS_DIR = path.resolve(process.env.JOBS_DIR || "./jobs");
 function ensureDir() {
   fs.mkdirSync(JOBS_DIR, { recursive: true });
 }
-export function createJob({ workspace, kind, prompt, createdBy = "anonymous" }) {
+export function createJob({ workspace, kind, kindai, prompt, createdBy = "anonymous" }) {
   const job = {
     id: crypto.randomUUID().slice(0, 12),
     workspace,
     createdBy,
     kind,     // Kind - Artefato
-    kindai:   // Kind – IA
+    kindai: String(kindai).trim().toLowerCase(), // ✅ Kind – IA aparece no .json
     prompt,
     status: "QUEUED",
     createdAt: new Date().toISOString(),
@@ -92,10 +92,14 @@ export function setError(id, error) {
   return job;
 }
 
-export function setCtx(id, patch) {
-  const job = readJob(id);
-  if (!job) return null;
-  job.ctx = { ...(job.ctx || {}), ...(patch || {}) };
+export function setCtx(jobId, patch) {
+  const job = readJob(jobId);
+  if (!job) throw new Error("job not found");
+
+  job.ctx = job.ctx || {};
+  Object.assign(job.ctx, patch || {});
+  job.updatedAt = new Date().toISOString();
+
   writeJob(job);
   return job;
 }

@@ -158,8 +158,8 @@ app.post("/api/mvp1/generate", authWorkspace, async (req, res, next) => {
     }
 
     const ALLOWED_AI = new Set(["gemini", "mock", "chatgpt", "claude"]);
-    const ENABLED_AI = new Set(["gemini", "mock"]); // por enquanto
-    const aiSel = (kindai || "gemini").toLowerCase();
+    const ENABLED_AI = new Set(["gemini", "mock", "claude"]); // ✅ Claude ativado
+    const aiSel = (kindai).toLowerCase();
 
     if (!ALLOWED_AI.has(aiSel)) {
       return res.status(400).json({ error: "invalid_ai", allowed: [...ALLOWED_AI] });
@@ -173,7 +173,7 @@ app.post("/api/mvp1/generate", authWorkspace, async (req, res, next) => {
       req.headers["x-forwarded-user"] ||
       "mvp-user";
 
-    const job = createJob({ workspace, kind, ai: aiSel, prompt, createdBy });
+    const job = createJob({ workspace, kind, kindai: aiSel, prompt, createdBy });
 
     // dispara assíncrono
     try {

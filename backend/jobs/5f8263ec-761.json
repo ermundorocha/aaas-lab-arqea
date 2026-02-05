@@ -1,0 +1,124 @@
+{
+  "id": "5f8263ec-761",
+  "workspace": "arqea",
+  "createdBy": "mvp-user",
+  "kind": "adr",
+  "prompt": "Com base em contexto e como um arquiteto enterprise apresente sugestoes de tecnologias para desenvolvimento de uma API, resumidamente. Em portugues brasil e em um único arquivo.",
+  "status": "DONE",
+  "createdAt": "2026-02-05T18:07:17.287Z",
+  "updatedAt": "2026-02-05T18:07:30.799Z",
+  "result": {
+    "meta": {
+      "title": "Plano de Artefatos para AaaS (MVP)",
+      "kind": "adr"
+    },
+    "written": [
+      "adrs/sugestoes-tecnologias-api-mvp.md"
+    ],
+    "gitops": {
+      "committed": true,
+      "lastCommit": {
+        "hash": "42387df4d4f77591601cfa542b3ab39b7060380e",
+        "date": "2026-02-05T15:07:30-03:00",
+        "message": "AaaS: update docs",
+        "refs": "HEAD -> main",
+        "body": "",
+        "author_name": "Ermundo Rocha",
+        "author_email": "ermundo.rocha@gmail.com"
+      }
+    }
+  },
+  "steps": [
+    {
+      "ts": "2026-02-05T18:07:17.290Z",
+      "level": "info",
+      "event": "ENQUEUED",
+      "msg": "job queued"
+    },
+    {
+      "ts": "2026-02-05T18:07:17.293Z",
+      "level": "info",
+      "event": "JOB_START",
+      "msg": "event received"
+    },
+    {
+      "ts": "2026-02-05T18:07:17.295Z",
+      "level": "info",
+      "event": "AUDIT",
+      "msg": "workspace=arqea createdBy=mvp-user ai=undefined"
+    },
+    {
+      "ts": "2026-02-05T18:07:17.298Z",
+      "level": "info",
+      "event": "JOB_START",
+      "msg": "job running"
+    },
+    {
+      "ts": "2026-02-05T18:07:17.300Z",
+      "level": "info",
+      "event": "STEP_PREVIEW",
+      "msg": "event received"
+    },
+    {
+      "ts": "2026-02-05T18:07:17.303Z",
+      "level": "info",
+      "event": "STEP_PREVIEW",
+      "msg": "generating preview"
+    },
+    {
+      "ts": "2026-02-05T18:07:29.007Z",
+      "level": "info",
+      "event": "STEP_BUILD_ARTIFACTS",
+      "msg": "event received"
+    },
+    {
+      "ts": "2026-02-05T18:07:29.009Z",
+      "level": "info",
+      "event": "STEP_BUILD_ARTIFACTS",
+      "msg": "validating preview artifacts"
+    },
+    {
+      "ts": "2026-02-05T18:07:29.012Z",
+      "level": "info",
+      "event": "STEP_WRITE_FILES",
+      "msg": "event received"
+    },
+    {
+      "ts": "2026-02-05T18:07:29.014Z",
+      "level": "info",
+      "event": "STEP_WRITE_FILES",
+      "msg": "writing docs files + catalog"
+    },
+    {
+      "ts": "2026-02-05T18:07:29.024Z",
+      "level": "info",
+      "event": "STEP_GITOPS",
+      "msg": "event received"
+    },
+    {
+      "ts": "2026-02-05T18:07:29.028Z",
+      "level": "info",
+      "event": "STEP_GITOPS",
+      "msg": "committing docs"
+    },
+    {
+      "ts": "2026-02-05T18:07:30.799Z",
+      "level": "info",
+      "event": "DONE",
+      "msg": "job completed"
+    }
+  ],
+  "ctx": {
+    "preview": {
+      "title": "Plano de Artefatos para AaaS (MVP)",
+      "summary": "Este artefato ADR propõe um conjunto de tecnologias fundamentais para o desenvolvimento do MVP da API (AaaS), cobrindo backend, banco de dados, segurança e infraestrutura, visando escalabilidade e robustez.",
+      "artifacts": [
+        {
+          "path": "adrs/sugestoes-tecnologias-api-mvp.md",
+          "contentType": "text/markdown",
+          "content": "{\"id\":\"5f8263ec-761\",\"workspace\":\"arqea\",\"createdBy\":\"mvp-user\",\"kind\":\"adr\",\"kindai\":\"\",\"prompt\":\"Com base em contexto e como um arquiteto enterprise apresente sugestoes de tecnologias para desenvolvimento de uma API, resumidamente. Em portugues brasil e em um único arquivo.\",\"status\":\"RUNNING\",\"createdAt\":\"2026-02-05T18:07:17.287Z\",\"updatedAt\":\"2026-02-05T18:07:17.301Z\"}\n================================================================================\n# ADR 001: Sugestões de Tecnologias para Desenvolvimento de API\n\n## Status\nProposto\n\n## Contexto\nO objetivo é desenvolver uma API (AaaS - API as a Service) como parte do MVP, que seja escalável, segura e performática. É necessário definir as principais tecnologias para o backend, banco de dados, segurança e infraestrutura.\n\n## Decisão\nAs seguintes tecnologias são sugeridas para o desenvolvimento da API:\n\n### Backend\n*   **Java com Spring Boot:** Escolha robusta para microserviços, oferece um ecossistema maduro, alta performance e vasta comunidade. Ideal para escalabilidade e manutenção.\n*   **Node.js com NestJS:** Framework progressivo para Node.js que constrói aplicações server-side escaláveis e eficientes, utilizando TypeScript. Excelente para APIs RESTful e GraphQL.\n\n### Banco de Dados\n*   **PostgreSQL:** Banco de dados relacional de código aberto, conhecido por sua robustez, conformidade ACID e extensibilidade. Ótimo para dados estruturados.\n*   **MongoDB:** Banco de dados NoSQL baseado em documentos, flexível e escalável, ideal para dados semi-estruturados ou que demandam alta velocidade de leitura/escrita.\n\n### Autenticação e Autorização\n*   **OAuth 2.0 e OpenID Connect (OIDC):** Padrões da indústria para delegação de autorização e autenticação, respectivamente. Recomendado para segurança robusta e interoperabilidade.\n*   **JWT (JSON Web Tokens):** Para transmissão segura de informações entre partes como um JSON compacto e auto-contido.\n\n### Infraestrutura e Deployment\n*   **Docker:** Para containerização da aplicação, garantindo portabilidade e consistência entre ambientes.\n*   **Kubernetes (ou serviço gerenciado como AWS EKS/Azure AKS):** Para orquestração de containers em produção, facilitando escalabilidade, alta disponibilidade e gerenciamento.\n*   **API Gateway (ex: AWS API Gateway, Azure API Management ou Kong):** Para gerenciar e proteger as APIs, controlar acesso, cache e monitoramento.\n\n### Monitoramento e Observabilidade\n*   **Prometheus e Grafana:** Para coleta e visualização de métricas.\n*   **ELK Stack (Elasticsearch, Logstash, Kibana):** Para agregação e análise de logs.\n\n## Consequências\n*   **Positivas:** Promove o uso de tecnologias modernas e amplamente adotadas, facilitando a contratação de talentos e o acesso a recursos da comunidade. Garante uma arquitetura escalável e segura.\n*   **Negativas:** Requer curva de aprendizado para a equipe, especialmente em tecnologias como Kubernetes e NestJS, se não houver experiência prévia."
+        }
+      ]
+    }
+  }
+}

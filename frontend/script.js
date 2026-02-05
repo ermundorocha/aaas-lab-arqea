@@ -223,15 +223,18 @@ async function generateJob() {
   if (!cfg.apiBase) return setStatus("Informe o Backend URL.", false);
   if (!cfg.token) return setStatus("Informe o token do workspace.", false);
 
+  // --- seleção do kind - artefato ---
+  const kindEl = els.kind || document.getElementById("selKindArtifact");
+  if (!kindEl) return setStatus("Campo 'Kind – Artefato' não encontrado.",false);
+  const kind = String(kindEl.value || "").trim();
+
+  // --- seleção do kind - ai
+  const kindelAi = els.aiKind || document.getElementById("selKindAI");
+  if (!kindelAi) return setStatus("Campo 'Kind – AI' não encontrado.",false);
+  const kindai = String(kindelAi.value || "").trim();
+
+  // --- informações contidas no prompt ---
   const prompt = (els.prompt?.value || "").trim();
-
-  const kindEl = els.kind || document.getElementById("kind") || document.getElementById("selKindArtifact");
-  if (!kindEl) return setStatus("Campo 'Kind – Artefato' não encontrado (id esperado: kind ou selKindArtifact).", false);
-  const kind = kindEl.value;
-
-  const aiEl = els.aiKind || document.getElementById("selKindAI");
-  const ai = (aiEl?.value || "gemini").toLowerCase();
-
   if (!prompt) return setStatus("Informe um prompt para gerar.", false);
 
   setStatus("Disparando job...");
@@ -242,7 +245,7 @@ async function generateJob() {
         ...headersAuth(cfg),
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ kind, ai, prompt }),
+      body: JSON.stringify({ kind, kindai, prompt }),
     });
 
     const data = await r.json().catch(() => ({}));
